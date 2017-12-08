@@ -1,0 +1,12 @@
+<Root>
+  <Tonometer>
+    <InitPow>40</InitPow>
+    <MaxPow>10</MaxPow>
+    <Threshold>10</Threshold>
+  </Tonometer>
+  <Compass>
+      <LeftMin>10</LeftMin>
+      <RightMax>40</RightMax>
+      <Threshold>10</Threshold>
+  </Compass>
+</Root>
