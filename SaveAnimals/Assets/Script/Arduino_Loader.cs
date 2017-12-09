@@ -29,6 +29,23 @@ public class Arduino_Loader : MonoBehaviour
 
             foreach (XmlElement X in nodeList)
             {
+                if (X.Name == "Port")
+                {
+                    foreach (XmlElement Set in X.ChildNodes)
+                    {
+
+                        if (Set.Name == "Baudrate")
+                        {
+                            Port.baudrate = int.Parse(Set.InnerText);
+                        }
+                        if (Set.Name == "Portname")
+                        {
+                            Port.portname = Set.InnerText;
+                            Debug.Log("port:" + Port.portname);
+                        }
+                    }
+
+                }
                 if (X.Name == "Tonometer")
                 {
                     foreach (XmlElement Pow in X.ChildNodes)
@@ -79,6 +96,8 @@ public class Arduino_Loader : MonoBehaviour
 
         DevideTonometerParts(Tonometer.InitPow, Tonometer.MaxPow, 3);
         DevideCompassParts(Compass.LeftMin, Compass.RightMax, 5);
+
+        BowController.OpenPort();
     }
 
     void DevideTonometerParts(int Min, int Max, int times)
@@ -120,6 +139,11 @@ public class Arduino_Loader : MonoBehaviour
     }
 }
 
+public static class Port
+{
+    public static int baudrate;
+    public static string portname;
+}
 
 public static class Tonometer
 {

@@ -9,4 +9,8 @@
       <RightMax>40</RightMax>
       <Threshold>10</Threshold>
   </Compass>
+  <Port>
+      <Boudrate>9600</Boudrate>
+      <Portname></Portname>
+  </Port>
 </Root>
