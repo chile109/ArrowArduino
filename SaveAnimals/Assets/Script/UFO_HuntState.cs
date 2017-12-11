@@ -13,11 +13,11 @@ public class UFO_HuntState : BaseState
 
         UFOController uFOController = Obj.GetComponent<UFOController>();;
 
-        if (uFOController.isCatched)
+        if (uFOController.isHunting)
         {
             Debug.Log("Finish huntting");
             uFOController._FSM.NowState = uFOController._ufo.Idle;
-            uFOController.isCatched = false;
+            uFOController.isHunting = false;
             uFOController.FoolAround(3);
         }
 
