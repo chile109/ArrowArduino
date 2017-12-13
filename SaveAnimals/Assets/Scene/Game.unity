@@ -186,6 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 471699502}
   - component: {fileID: 471699501}
+  - component: {fileID: 471699503}
   - component: {fileID: 471699500}
   m_Layer: 0
   m_Name: Animal
@@ -268,6 +269,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &471699503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 471699499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248c75e0020054ad08811b54f390d67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCatched: 0
+  MoveSpeed: 2
+  FleeSpeed: 5
+  m_target: -1
+  m_targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &529162883
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1339404840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +438,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: 0.01
   far clip plane: 10
   field of view: 60
   orthographic: 1

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 public class AnimalController : MonoBehaviour {
 
@@ -14,11 +15,14 @@ public class AnimalController : MonoBehaviour {
 
     public Target m_target = Target.Left;
     public Vector3 m_targetPos;
-
+    Vector3 InitPos;
 
 	void Start () {
         _FSM = new StateMachine();
         _FSM.NowState = _ani.idle;
+        InitPos = Camera.main.WorldToViewportPoint(this.transform.position);
+
+        BossCome(5);
 	}
 
 	void Update () {
@@ -27,15 +31,23 @@ public class AnimalController : MonoBehaviour {
 
     public void SetTarget()
     {  
-        float rand = UnityEngine.Random.value;
+        
         Vector3 scale = this.transform.localScale;
         scale.x = Math.Abs(scale.x) * (m_target == Target.Right ? 1 : -1);
         this.transform.localScale = scale;
 
         float cameraZ = Camera.main.transform.position.z;
-        m_targetPos = Camera.main.ViewportToWorldPoint(new Vector3((int)m_target, 1 * rand, -cameraZ));
+        m_targetPos = Camera.main.ViewportToWorldPoint(new Vector3((int)m_target, InitPos.y, -cameraZ));
+        Debug.Log("targetPos:" + m_targetPos);
     }
 
+    public async void BossCome(double _duration)
+    {
+        Debug.Log("Waiting " + _duration + " second...");
+        await Task.Delay(TimeSpan.FromSeconds(_duration));
+        _FSM.NowState = _ani.flee;
+        Debug.Log("Done!");
+    }
 }
 
 public class Animal
