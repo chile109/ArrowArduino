@@ -9,8 +9,6 @@ public class UFO_HuntState : BaseState
 
     public override void StateDoing(GameObject Obj)
     {
-        Debug.Log("UFO_Hunting");
-
         UFOController uFOController = Obj.GetComponent<UFOController>();;
 
         if (uFOController.isHunting)

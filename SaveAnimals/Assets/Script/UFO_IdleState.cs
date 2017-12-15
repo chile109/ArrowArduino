@@ -7,7 +7,7 @@ public class UFO_IdleState : BaseState
 
     public override void StateDoing(GameObject Obj)
     {
-        Debug.Log("UFO_Idle");
+        //Debug.Log("UFO_Idle");
     }
 
 

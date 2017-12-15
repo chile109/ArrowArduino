@@ -25,7 +25,7 @@ public class UFOController : MonoBehaviour {
 
     public async void FoolAround(double _duration)
     {
-        Debug.Log("Waiting " + _duration + " second...");
+        //Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
         _FSM.NowState = _ufo.Hunt;
         TestTimer(5);
