@@ -13,7 +13,7 @@ public class AnimalController : MonoBehaviour {
     public float MoveSpeed = 2.0f;
     public float FleeSpeed = 5.0f;
 
-    public Target m_target = Target.Left;
+    public Target m_target = Target.Right;
     public Vector3 m_targetPos;
     Vector3 InitPos;
 
@@ -47,6 +47,34 @@ public class AnimalController : MonoBehaviour {
         await Task.Delay(TimeSpan.FromSeconds(_duration));
         _FSM.NowState = _ani.flee;
         Debug.Log("Done!");
+    }
+
+    public delegate void voidDelegate(AnimalController Ani_Control);
+    public voidDelegate OnArrested;
+
+    public static AnimalController Create(GameObject prefab, Target target, Vector3 pos)
+    {
+        if(pos.x < prefab.transform.position.x)
+        {
+            Vector3 scale = prefab.transform.localScale;
+            scale.x = -1 ;
+            prefab.transform.localScale = scale;
+        }
+        GameObject inst = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
+        AnimalController _animal = inst.AddComponent<AnimalController>();
+        _animal.Init(target);
+
+        return _animal;
+    }
+
+    void Init(Target target)
+    {
+        m_target = target;
+    }
+
+    void BecomeBubble()
+    {
+        OnArrested(this);
     }
 }
 
