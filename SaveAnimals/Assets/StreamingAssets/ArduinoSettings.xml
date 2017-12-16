@@ -6,7 +6,7 @@
   </Tonometer>
   <Compass>
       <LeftMin>10</LeftMin>
-      <RightMax>40</RightMax>
+      <RightMax>50</RightMax>
       <Threshold>10</Threshold>
   </Compass>
   <Port>

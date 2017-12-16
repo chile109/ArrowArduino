@@ -10,6 +10,8 @@ public class BowController : MonoBehaviour {
 
     private static SerialPort sp;
     static Dictionary<string, int> data = new Dictionary<string, int>();
+    public int test_val;
+    public Transform Arrow;
 
 	// Use this for initialization
 	public static void OpenPort() {
@@ -25,7 +27,8 @@ public class BowController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
+        ArrowVertivcal(test_val);
         if(sp.IsOpen)
         {
             try
@@ -63,7 +66,6 @@ public class BowController : MonoBehaviour {
         Char delimiter = ':';
         String[] substrings = msg.Split(delimiter);
 
-
         string _device = substrings[0];
         int _val = int.Parse(substrings[1]);
 
@@ -74,30 +76,39 @@ public class BowController : MonoBehaviour {
 
     void ArrowVertivcal(int _val)
     {
-        if (_val > Tonometer.InitPow && _val <= Tonometer.Pow2)
-            Debug.Log("Power1");
-        else if (_val > Tonometer.Pow2 && _val <= Tonometer.Pow3)
-            Debug.Log("power2");
-        else if (_val > Tonometer.Pow3)
-            Debug.Log("MAxPower");
+
+        if (_val < Tonometer.InitPow && _val >= Tonometer.Pow2)
+            Arrow.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+        else if (_val < Tonometer.Pow2 && _val >= Tonometer.Pow3)
+            Arrow.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        
+        else if (_val < Tonometer.Pow3)
+            Arrow.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         else
-            Debug.Log("NoPower");
+            Arrow.localScale = Vector3.one;
             
     }
 
     void ArrowHorizental(int _val)
     {
+        Vector3 m_rot = Arrow.rotation.eulerAngles;
         if (_val > Compass.LeftMin && _val <= Compass.Left2)
-            Debug.Log("left1");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 60);
+
         else if (_val > Compass.Left2 && _val <= Compass.Left3)
-            Debug.Log("left2");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 30);
+
         else if (_val > Compass.Left3 && _val <= Compass.Right3)
-            Debug.Log("Middle");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
+        
         else if (_val > Compass.Right3 && _val <= Compass.Right2)
-            Debug.Log("right2");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -30);
+        
         else if (_val > Compass.Right2 && _val <= Compass.RightMax)
-            Debug.Log("right1");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -60);
+        
         else
-            Debug.Log("reset");
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
     }
 }
