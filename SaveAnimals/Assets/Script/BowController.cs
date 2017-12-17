@@ -18,7 +18,9 @@ public class BowController : MonoBehaviour
 
     public void Start()
     {
-        pre_val = Tonometer.InitPow;
+        //pre_val = Tonometer.InitPow;
+
+        ArrowHorizental(15);
     }
     // Use this for initialization
     public static void OpenPort()
@@ -85,18 +87,26 @@ public class BowController : MonoBehaviour
 
     void ArrowVertivcal(int _val)
     {
-        if (Math.Abs(_val - pre_val) > Tonometer.Threshold)
+        if (_val - pre_val > Tonometer.Threshold && VerticID >= 0)
         {
             Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
+            Debug.Log("HorizID:" + HorizID + "VerticID:" + VerticID);
             pre_val = _val;
             IsReloading = true;
+
+            Vector3 _target = Camera.main.ScreenToWorldPoint(ShootPoint[HorizID, VerticID]);
+            Debug.Log(_target);
+            shootArrow(_target);
             return;
         }
         else
             ForceView(_val);
 
     }
-
+    void shootArrow(Vector3 goal)
+    {
+        LeanTween.move(Arrow.gameObject, goal, 2f).setEase(LeanTweenType.easeInQuad).setOnComplete(_ => Debug.Log("goal"));
+    }
     private int VerticID;
     private void ForceView(int _val)
     {
@@ -159,18 +169,22 @@ public class BowController : MonoBehaviour
         }
         else
         {
-            HorizID = -1;
+            HorizID = 2;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
         }
     }
-
+    bool initPos = false;
+    Vector2 tempTar = new Vector2(2, 1);
     void OnGUI()
     {
-        //InitPos = Camera.main.WorldToViewportPoint(this.transform.position);
+        if (!initPos)
+        {
+            SetTarget();
+        }
 
         for (int i = 0; i < 6; i++)
         {
-            GUI.Box(new Rect( 160 + 1600/5 * i, 0, 10, Screen.height), "");
+            GUI.Box(new Rect(160 + 1600 / 5 * i, 0, 10, Screen.height), "");
         }
 
         for (int i = 0; i < 4; i++)
@@ -186,9 +200,30 @@ public class BowController : MonoBehaviour
         //    }
         //}
 
-        if(IsReloading && HorizID >= 0 && VerticID >= 0)
+
+        if (IsReloading && VerticID >= 0)
         {
-            GUI.Box(new Rect(160 + 1600 / 5 * HorizID, 100 + 250 * VerticID, 320, 250), "");
+            tempTar = new Vector2(HorizID, VerticID);
+            IsReloading = false;
         }
+
+        GUI.Box(new Rect(160 + 1600 / 5 * tempTar.x, 600 - 250 * tempTar.y, 320, 250), "");
     }
+
+    Vector3[,] ShootPoint = new Vector3[5, 3];
+
+    void SetTarget()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                Vector3 gPos = new Vector3(320 + 1600 / 5 * i, 225 + 250 * j, 0);
+                ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
+                Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
+            }
+        }
+
+        initPos = true;
+    } 
 }

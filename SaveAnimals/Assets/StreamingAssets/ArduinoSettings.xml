@@ -2,7 +2,7 @@
   <Tonometer>
     <InitPow>40</InitPow>
     <MaxPow>10</MaxPow>
-    <Threshold>10</Threshold>
+    <Threshold>5</Threshold>
   </Tonometer>
   <Compass>
       <LeftMin>10</LeftMin>
