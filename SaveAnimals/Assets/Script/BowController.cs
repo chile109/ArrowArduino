@@ -11,6 +11,7 @@ public class BowController : MonoBehaviour
 
     private static SerialPort sp;
     static Dictionary<string, int> data = new Dictionary<string, int>();
+    Vector3 InitPosition;
     public int pre_val;
     public int test_val;
     public Transform Arrow;
@@ -18,9 +19,8 @@ public class BowController : MonoBehaviour
 
     public void Start()
     {
-        //pre_val = Tonometer.InitPow;
-
-        ArrowHorizental(15);
+        pre_val = Tonometer.InitPow;
+        InitPosition = Arrow.position;
     }
     // Use this for initialization
     public static void OpenPort()
@@ -105,7 +105,13 @@ public class BowController : MonoBehaviour
     }
     void shootArrow(Vector3 goal)
     {
-        LeanTween.move(Arrow.gameObject, goal, 2f).setEase(LeanTweenType.easeInQuad).setOnComplete(_ => Debug.Log("goal"));
+        LeanTween.move(Arrow.gameObject, goal, 2f).setEase(LeanTweenType.easeInQuad)
+                 .setOnComplete(_ =>
+        {
+            Debug.Log("goal");
+            Arrow.position = InitPosition;
+            IsReloading = false;
+        });
     }
     private int VerticID;
     private void ForceView(int _val)
@@ -192,15 +198,6 @@ public class BowController : MonoBehaviour
             GUI.Box(new Rect(0, 100 + 250 * i, Screen.width, 10), "");
         }
 
-        //for (int k = 0; k < 5; k++)
-        //{
-        //    for (int i = 0; i < 3; i++)
-        //    {
-        //        GUI.Box(new Rect(160 + 1600 / 5 * k, 100 + 250 * i, 320, 250), "");
-        //    }
-        //}
-
-
         if (IsReloading && VerticID >= 0)
         {
             tempTar = new Vector2(HorizID, VerticID);
@@ -220,10 +217,10 @@ public class BowController : MonoBehaviour
             {
                 Vector3 gPos = new Vector3(320 + 1600 / 5 * i, 225 + 250 * j, 0);
                 ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
-                Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
+                //Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
             }
         }
 
         initPos = true;
-    } 
+    }
 }
