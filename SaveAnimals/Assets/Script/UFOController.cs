@@ -8,12 +8,14 @@ public class UFOController : MonoBehaviour {
 
     public UFO _ufo;
     public StateMachine _FSM;
-    public bool isHunting = false;
+    public bool HuntFinish = false;
+
+    Animator _Ani;
 
     void Start () {
 
         _FSM = new StateMachine();
-
+        _Ani = GetComponent<Animator>();
         _ufo = new UFO();
         _FSM.NowState = _ufo.Idle;
         FoolAround(3);
@@ -27,17 +29,17 @@ public class UFOController : MonoBehaviour {
     {
         //Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
+        _Ani.SetTrigger("IsHuntting");
         _FSM.NowState = _ufo.Hunt;
         TestTimer(5);
-        Debug.Log("Done!");
     }
 
     public async void TestTimer(double _duration)
     {
         Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
-        isHunting = true;
-        Debug.Log("Done!");
+        _Ani.SetTrigger("IsRest");
+        HuntFinish = true;
     }
 }
 
