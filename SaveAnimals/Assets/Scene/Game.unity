@@ -326,6 +326,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06a5f60345d7e4f0b9cf1b5b4bed1764, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &445558522 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1167368548840694, guid: 5a5725d34b5dd40c8b5250072c028a3b,
+    type: 2}
+  m_PrefabInternal: {fileID: 491916175}
 --- !u!1 &470025829
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,11 +413,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4875740077638862, guid: 5a5725d34b5dd40c8b5250072c028a3b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.06
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 4875740077638862, guid: 5a5725d34b5dd40c8b5250072c028a3b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.56
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 4875740077638862, guid: 5a5725d34b5dd40c8b5250072c028a3b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -473,7 +478,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9044414e82bd47ebae7a40b7726e819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHunting: 0
+  Beam: {fileID: 445558522}
+  HuntFinish: 0
+  m_Target: {fileID: 1916127289}
+  MoveSpeed: 2
+  TargetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &529162883
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +988,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03f217946b239475abee1ea09db1b849, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1916127289 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4565476240809850, guid: 03f217946b239475abee1ea09db1b849,
+    type: 2}
+  m_PrefabInternal: {fileID: 1614659494}
 --- !u!1 &1984821299
 GameObject:
   m_ObjectHideFlags: 0

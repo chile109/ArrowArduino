@@ -8,9 +8,15 @@ public class UFOController : MonoBehaviour {
 
     public UFO _ufo;
     public StateMachine _FSM;
+    public GameObject Beam;
     public bool HuntFinish = false;
 
+    public Transform m_Target;
+    public float MoveSpeed = 2;
+
     Animator _Ani;
+
+    public Vector3 TargetPos = Vector3.zero;
 
     void Start () {
 
@@ -18,11 +24,19 @@ public class UFOController : MonoBehaviour {
         _Ani = GetComponent<Animator>();
         _ufo = new UFO();
         _FSM.NowState = _ufo.Idle;
-        FoolAround(3);
+
+        TargetPos = new Vector3(m_Target.position.x, this.transform.position.y, this.transform.position.z);
+        //FoolAround(3);
 	}
 	
 	void Update () {
         _FSM.NowState.StateDoing(this.gameObject);
+
+        if(Math.Abs(this.transform.position.x - TargetPos.x) < 0.01f && !HuntFinish)
+        {
+            _Ani.SetTrigger("IsHuntting");
+            _FSM.NowState = _ufo.Hunt;
+        }
 	}
 
     public async void FoolAround(double _duration)
