@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
-
 public class UFOController : MonoBehaviour {
 
     public UFO _ufo;
@@ -20,9 +18,6 @@ public class UFOController : MonoBehaviour {
     public Animator _Ani;
     public Vector3 InitPos;
     public Vector3 TargetPos = Vector3.zero;
-
-
-
 
     void Start () {
 
@@ -63,11 +58,4 @@ public class UFOController : MonoBehaviour {
         _Ani.SetTrigger("IsRest");
         HuntFinish = true;
     }
-}
-
-public class UFO
-{
-    public UFO_IdleState Idle = new UFO_IdleState();
-    public UFO_HuntState Hunt = new UFO_HuntState();
-
 }
