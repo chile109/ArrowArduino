@@ -6,6 +6,7 @@ public class ANI_Cheering : BaseState
 {
     public override void StateDoing(GameObject Obj)
     {
-        Debug.Log("Animal cheering!");
+        Animator _animat = Obj.GetComponent<Animator>();
+        _animat.SetTrigger("Succeed");
     }
 }

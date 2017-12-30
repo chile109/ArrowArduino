@@ -194,6 +194,7 @@ public class BowController : MonoBehaviour
             SetTarget();
         }
 
+        //畫出15宮格
         for (int i = 0; i < 6; i++)
         {
             GUI.Box(new Rect(160 + 1600 / 5 * i, 0, 10, Screen.height), "");
@@ -216,6 +217,7 @@ public class BowController : MonoBehaviour
             GUI.TextArea(new Rect(100 , 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
             GUI.TextArea(new Rect(100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
         }
+        //畫出瞄準區域
         GUI.Box(new Rect(160 + 1600 / 5 * tempTar.x, 600 - 250 * tempTar.y, 320, 250), "");
     }
 

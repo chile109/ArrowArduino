@@ -6,6 +6,8 @@ public class ANI_Traped : BaseState
 {
     public override void StateDoing(GameObject Obj)
     {
-        Debug.Log("Animal Traped!");
+        Animator _animat = Obj.GetComponent<Animator>();
+        _animat.SetTrigger("IsArrested");
+
     }
 }
