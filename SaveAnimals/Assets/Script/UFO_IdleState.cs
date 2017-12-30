@@ -26,7 +26,7 @@ public class UFO_IdleState : BaseState
             uFOController._Ani.SetTrigger("IsHuntting");
             uFOController._FSM.NowState = uFOController._ufo.Hunt;
 
-            uFOController.Notify(uFOController.m_Target[0].name, AnimalState.Help);
+            ObserverSystem.share.Notify(uFOController.m_Target[0].name, AnimalState.Help);
         }
     }
 

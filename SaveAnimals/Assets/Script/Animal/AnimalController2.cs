@@ -15,7 +15,7 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
 
     void Start()
     {
-        UFOController.share.Attach(this);
+        ObserverSystem.share.Attach(this);
         _FSM = new StateMachine();
         _FSM.NowState = _ani.idle;
         InitPos = Camera.main.WorldToViewportPoint(this.transform.position);

@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public interface ObDataserver
-{
-    void BeNotified(string AniName, AnimalState state);
-}
+
 
 public class UFOController : MonoBehaviour {
 
@@ -21,26 +18,11 @@ public class UFOController : MonoBehaviour {
     public float MoveSpeed = 2;
 
     public Animator _Ani;
-
-    private static UFOController _instants;
-    public static UFOController share { get { return _instants; } }
-
-    private HashSet<ObDataserver> m_ObDateServers = new HashSet<ObDataserver>();
-
     public Vector3 InitPos;
     public Vector3 TargetPos = Vector3.zero;
 
 
-    void Awake()
-    {
-        if (_instants == null)
-        {
-            _instants = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-            Destroy(this);
-    }
+
 
     void Start () {
 
@@ -51,35 +33,13 @@ public class UFOController : MonoBehaviour {
         InitPos = new Vector3(0, this.transform.position.y, this.transform.position.z);
         TargetPos = new Vector3(m_Target[0].position.x, this.transform.position.y, this.transform.position.z);
 
-        Notify("All", AnimalState.Idle);
+        ObserverSystem.share.Notify("All", AnimalState.Idle);
         FoolAround(5);
 	}
 	
 	void Update () {
         _FSM.NowState.StateDoing(this.gameObject);
 	}
-
-    public void Attach(ObDataserver theObserver)
-    {
-        if (theObserver != null)
-            m_ObDateServers.Add(theObserver);
-
-    }
-
-    public void Detach(ObDataserver theObserver)
-    {
-        if (theObserver != null)
-            m_ObDateServers.Remove(theObserver);
-    }
-
-    public void Notify(string AniName, AnimalState state)
-    {
-        Debug.Log(AniName + ": " + state);
-        foreach (var theObserver in m_ObDateServers)
-            Task.Run(() => theObserver.BeNotified(AniName, state));
-
-    }
-
 
     /// <summary>
     /// 遊盪一段時間進入狩獵
