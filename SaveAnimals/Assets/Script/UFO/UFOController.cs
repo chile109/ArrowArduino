@@ -10,25 +10,25 @@ public class UFOController : MonoBehaviour {
     public StateMachine _FSM;
     public GameObject Beam;
     public bool startHunt = false;
-    public bool HuntFinish = false;
+    public static bool HuntFinish = false;
 
-    public Transform[] m_Target;
+    public Transform[] m_Targets;
+    public int TargetID;
     public float MoveSpeed = 2;
 
     public Animator _Ani;
     public Vector3 InitPos;
-    public Vector3 TargetPos = Vector3.zero;
+    public Vector3 TargetPos;
 
     void Start () {
-
         _FSM = new StateMachine();
         _Ani = GetComponent<Animator>();
         _ufo = new UFO();
         _FSM.NowState = _ufo.Idle;
         InitPos = new Vector3(0, this.transform.position.y, this.transform.position.z);
-        TargetPos = new Vector3(m_Target[0].position.x, this.transform.position.y, this.transform.position.z);
 
-        ObserverSystem.share.Notify("All", AnimalState.Idle);
+        TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
+        TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         FoolAround(5);
 	}
 	
@@ -44,18 +44,11 @@ public class UFOController : MonoBehaviour {
     {
         //Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
+        TargetID  = UnityEngine.Random.Range(0, m_Targets.Length);
+        TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
+        Debug.Log(m_Targets[TargetID].position.x);
+
         startHunt = true;
     }
 
-    /// <summary>
-    /// 進入狩獵直到時間結束
-    /// </summary>
-    /// <param name="_duration">Duration.</param>
-    public async void TestTimer(double _duration)
-    {
-        Debug.Log("Waiting " + _duration + " second...");
-        await Task.Delay(TimeSpan.FromSeconds(_duration));
-        _Ani.SetTrigger("IsRest");
-        HuntFinish = true;
-    }
 }

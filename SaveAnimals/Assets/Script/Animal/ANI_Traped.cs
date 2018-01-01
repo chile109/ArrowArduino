@@ -15,7 +15,10 @@ public class ANI_Traped : BaseState
         LeanTween.move(Obj, goal, 10f).setOnComplete(_ =>
         {
             Debug.Log("goal");
+            UFOController.HuntFinish = true;
             Obj.transform.position = InitPos;
+            Obj.GetComponent<AnimalController2>().BubbleOff();
+            _animat.Play("Standby");
         });
     }
 }

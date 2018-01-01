@@ -493,9 +493,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Beam: {fileID: 445558522}
   startHunt: 0
-  HuntFinish: 0
-  m_Target:
+  m_Targets:
+  - {fileID: 1104640669}
+  - {fileID: 1223299030}
   - {fileID: 1696826277}
+  TargetID: 0
   MoveSpeed: 2
   _Ani: {fileID: 0}
   InitPos: {x: 0, y: 0, z: 0}
@@ -691,6 +693,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1245646395991618, guid: 03f217946b239475abee1ea09db1b849,
     type: 2}
   m_PrefabInternal: {fileID: 1614659494}
+--- !u!4 &1104640669 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4565476240809850, guid: 03f217946b239475abee1ea09db1b849,
+    type: 2}
+  m_PrefabInternal: {fileID: 1614659494}
 --- !u!114 &1104640671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetPos: {x: 0, y: 0, z: 0}
   Bubble: {fileID: 172112996}
+  InitPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1105024114
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +782,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetPos: {x: 0, y: 0, z: 0}
   Bubble: {fileID: 857124462}
+  InitPos: {x: 0, y: 0, z: 0}
+--- !u!4 &1223299030 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4355378141005854, guid: b774668ec71de40c58af0bdb9f9afa95,
+    type: 2}
+  m_PrefabInternal: {fileID: 756788936}
 --- !u!1 &1319720522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetPos: {x: 0, y: 0, z: 0}
   Bubble: {fileID: 1528380986}
+  InitPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1984821299
 GameObject:
   m_ObjectHideFlags: 0

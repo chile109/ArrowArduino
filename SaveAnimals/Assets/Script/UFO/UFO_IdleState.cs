@@ -21,12 +21,13 @@ public class UFO_IdleState : BaseState
         
             Obj.transform.position = pos;
 
-        if (Math.Abs(Obj.transform.position.x - uFOController.TargetPos.x) < 0.01f && !uFOController.HuntFinish)
+        if (Math.Abs(Obj.transform.position.x - uFOController.TargetPos.x) < 0.01f && !UFOController.HuntFinish)
         {
+            uFOController.startHunt = false;
             uFOController._Ani.SetTrigger("IsHuntting");
             uFOController._FSM.NowState = uFOController._ufo.Hunt;
 
-            ObserverSystem.share.Notify(uFOController.m_Target[0].name, AnimalState.Help);
+            ObserverSystem.share.Notify(uFOController.m_Targets[uFOController.TargetID].name, AnimalState.Help);
         }
     }
 

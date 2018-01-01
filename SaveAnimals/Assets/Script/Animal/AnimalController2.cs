@@ -11,7 +11,8 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
     public StateMachine _FSM;
     public Vector3 m_targetPos;
     public GameObject Bubble;
-    Vector3 InitPos;
+    public Vector3 InitPos;
+
 
     void Start()
     {

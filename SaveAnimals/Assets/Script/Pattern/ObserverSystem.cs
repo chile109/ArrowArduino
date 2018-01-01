@@ -29,6 +29,10 @@ public class ObserverSystem : MonoBehaviour
             Destroy(this);
     }
 
+    private void Start()
+    {
+        Notify("All", AnimalState.Idle);
+    }
 
     public void Attach(ObDataserver theObserver)
     {
