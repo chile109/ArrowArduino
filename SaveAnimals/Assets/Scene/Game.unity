@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9bb2a81b685438d819dc91dbda45a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showLog: 0
+  showLog: 1
 --- !u!4 &1224122735
 Transform:
   m_ObjectHideFlags: 0
@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a2bb55d43664ee899d84bf0efc8140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TarSystem: {fileID: 0}
+  TarSystem: {fileID: 1224122734}
   pre_val: 40
   test_val: 40
   Arrow: {fileID: 2012977060}
