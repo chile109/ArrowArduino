@@ -95,7 +95,7 @@ public class Arduino_Loader : MonoBehaviour
             return;
 
         DevideTonometerParts(Tonometer.InitPow, Tonometer.MaxPow, 3);
-        DevideCompassParts(Compass.LeftMin, Compass.RightMax, 5);
+        DevideCompassParts(Compass.LeftMin, Compass.RightMax, 6);
 
         BowController.OpenPort();
     }
@@ -132,10 +132,12 @@ public class Arduino_Loader : MonoBehaviour
 
         Compass.Left2  = points[1];
         Compass.Left3  = points[2];
-        Compass.Right3 = points[3];
-        Compass.Right2 = points[4];
+        Compass.Middle = points[3];
+        Compass.Right3 = points[4];
+        Compass.Right2 = points[5];
 
-        Debug.Log("left2:" + Compass.Left2 + "  left3:" + Compass.Left3 + "  right3:" + Compass.Right3 + "  right2:" + Compass.Right2);
+        Debug.Log("left2:" + Compass.Left2 + "  left3:" + Compass.Left3 + "  Middle:" + Compass.Middle 
+                  + "  right3:" + Compass.Right3 + "  right2:" + Compass.Right2);
     }
 }
 
@@ -159,6 +161,7 @@ public static class Compass
     public static int LeftMin = 0;
     public static int Left2 = 0;
     public static int Left3 = 0;
+    public static int Middle = 0;
     public static int Right2 = 0;
     public static int Right3 = 0;
     public static int RightMax = 0;

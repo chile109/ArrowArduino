@@ -29,8 +29,6 @@ public class BowController : MonoBehaviour
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
 
-        ArrowHorizental(15);
-
     }
 
     /// <summary>
@@ -176,22 +174,27 @@ public class BowController : MonoBehaviour
         else if (_val > Compass.Left2 && _val <= Compass.Left3)
         {
             HorizID = 1;
-            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 30);
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 40);
         }
 
-        else if (_val > Compass.Left3 && _val <= Compass.Right3)
+        else if (_val > Compass.Left3 && _val <= Compass.Middle)
         {
             HorizID = 2;
-            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 20);
+        }
+        else if (_val > Compass.Middle && _val <= Compass.Right3)
+        {
+            HorizID = 3;
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -20);
         }
         else if (_val > Compass.Right3 && _val <= Compass.Right2)
         {
-            HorizID = 3;
-            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -30);
+            HorizID = 4;
+            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -40);
         }
         else if (_val > Compass.Right2 && _val <= Compass.RightMax)
         {
-            HorizID = 4;
+            HorizID = 5;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -60);
         }
         else

@@ -45,7 +45,7 @@ public class TargetSystem : MonoBehaviour {
             GUI.TextArea(new Rect(100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
         }
         //畫出瞄準區域
-        GUI.Box(new Rect(160 + 1600 / 5 * tempTar.x, 600 - 250 * tempTar.y, 320, 250), "");
+        GUI.Box(new Rect(1600 / 5 * tempTar.x, 475 - 250 * tempTar.y, 320, 250), "");
     }
 
 
