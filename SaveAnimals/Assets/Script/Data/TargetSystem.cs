@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetSystem : MonoBehaviour {
    
-    public Vector3[,] ShootPoint = new Vector3[6, 3]; //15宮格矩陣中心點
+    public static Vector3[,] ShootPoint = new Vector3[6, 3]; //15宮格矩陣中心點
 
     public bool showLog = false;
 
@@ -56,7 +56,7 @@ public class TargetSystem : MonoBehaviour {
         {
             for (int j = 0; j < 3; j++)
             {
-                Vector3 gPos = new Vector3(160 + 1600 / 5 * i, 225 + 250 * j, 0);
+                Vector3 gPos = new Vector3(160 + 1600 / 5 * i, 200 + 250 * j, 0);
                 ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
                 //Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
             }

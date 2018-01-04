@@ -111,7 +111,7 @@ public class BowController : MonoBehaviour
             pre_val = _val;
             IsReloading = true;
 
-            Vector3 _target = Camera.main.ScreenToWorldPoint(TarSystem.ShootPoint[HorizID, VerticID]);
+            Vector3 _target = Camera.main.ScreenToWorldPoint(TargetSystem.ShootPoint[HorizID, VerticID]);
 
             shootArrow(_target);
             return;

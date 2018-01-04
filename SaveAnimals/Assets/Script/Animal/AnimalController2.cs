@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 public class AnimalController2 : MonoBehaviour, ObDataserver
 {
-
     public Animal _ani = new Animal();
     public StateMachine _FSM;
     public Vector3 m_targetPos;
     public GameObject Bubble;
     public Vector3 InitPos;
 
+    public int H_pos;
+    public int V_pos;
 
     void Start()
     {
@@ -38,7 +39,6 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         {
             MainTask.Singleton.AddTask(delegate
            {
-               Debug.Log(this.name + "2: " + state);
                if (AniName == this.name || AniName == "All")
                {
                    Debug.Log(this.name + ": " + state);
@@ -71,6 +71,26 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         catch (Exception e)
         {
             Debug.Log("Error convert, message" + e.Message + ", reason: " + e.StackTrace + ", Text: ");
+        }
+
+    }
+
+    private void Update()
+    {
+        var NowPos = Camera.main.WorldToScreenPoint(this.transform.position);
+        //Debug.Log(NowPos + " / " + TargetSystem.ShootPoint[H_pos, 0]);
+        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 0].y)
+            V_pos = 0;
+        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 1].y)
+            V_pos = 1;
+        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 2].y)
+            V_pos = 2;
+    }
+    public void BeNotified(int Horizental, int Vertical)
+    {
+        if(Horizental == H_pos && Vertical == V_pos)
+        {
+            ObserverSystem.share.Notify(this.name, AnimalState.Saved);
         }
 
     }
