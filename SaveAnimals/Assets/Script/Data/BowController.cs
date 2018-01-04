@@ -8,23 +8,34 @@ using System;
 
 public class BowController : MonoBehaviour
 {
+    public TargetSystem TarSystem;
 
     private static SerialPort sp;
-    static Dictionary<string, int> data = new Dictionary<string, int>();
+    static Dictionary<string, int> data = new Dictionary<string, int>();    //訊號資訊
     Vector3 InitPosition;
-    public int pre_val;
-    public int test_val;
-    public Transform Arrow;
-    public bool IsReloading = false;
 
-    public bool showLog = false;
+    public int pre_val; //前訊號值
+
+    public int test_val;
+    public Transform Arrow; //  弓箭
+
+    public static bool IsReloading = false;
+
+    public static int VerticID;   //Ｙ軸編號
+    public static int HorizID;    //Ｘ軸編號
 
     public void Start()
     {
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
+
+        ArrowHorizental(15);
+
     }
-    // Use this for initialization
+
+    /// <summary>
+    /// 開啟ＵＳＢ port
+    /// </summary>
     public static void OpenPort()
     {
 
@@ -37,7 +48,6 @@ public class BowController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -72,6 +82,11 @@ public class BowController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 訊號斷行處理
+    /// </summary>
+    /// <returns>The signal.</returns>
+    /// <param name="msg">Message.</param>
     static Dictionary<string, int> DistinguishSignal(string msg)
     {
         data.Clear();
@@ -87,10 +102,10 @@ public class BowController : MonoBehaviour
         return data;
     }
 
-    private int VerticalLog = 0;
+
     void ArrowVertivcal(int _val)
     {
-        VerticalLog = _val;
+        TargetSystem.VerticalLog = _val;
         if (_val - pre_val > Tonometer.Threshold && VerticID >= 0)
         {
             Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
@@ -98,8 +113,8 @@ public class BowController : MonoBehaviour
             pre_val = _val;
             IsReloading = true;
 
-            Vector3 _target = Camera.main.ScreenToWorldPoint(ShootPoint[HorizID, VerticID]);
-            Debug.Log(_target);
+            Vector3 _target = Camera.main.ScreenToWorldPoint(TarSystem.ShootPoint[HorizID, VerticID]);
+
             shootArrow(_target);
             return;
         }
@@ -112,12 +127,12 @@ public class BowController : MonoBehaviour
         LeanTween.move(Arrow.gameObject, goal, 2f).setEase(LeanTweenType.easeInQuad)
                  .setOnComplete(_ =>
         {
-            Debug.Log("goal");
+            Debug.Log("Hit");
             Arrow.position = InitPosition;
             IsReloading = false;
         });
     }
-    private int VerticID;
+
     private void ForceView(int _val)
     {
         //Debug.Log("force");
@@ -147,11 +162,11 @@ public class BowController : MonoBehaviour
         }
     }
 
-    private int HorizentalLog = 0;
-    private int HorizID;
+
+
     void ArrowHorizental(int _val)
     {
-        HorizentalLog = _val;
+        TargetSystem.HorizentalLog = _val;
         Vector3 m_rot = Arrow.rotation.eulerAngles;
         if (_val > Compass.LeftMin && _val <= Compass.Left2)
         {
@@ -185,56 +200,5 @@ public class BowController : MonoBehaviour
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
         }
     }
-    bool initPos = false;
-    Vector2 tempTar = new Vector2(2, 1);
-    void OnGUI()
-    {
-        if (!initPos)
-        {
-            SetTarget();
-        }
 
-        //畫出15宮格
-        for (int i = 0; i < 6; i++)
-        {
-            GUI.Box(new Rect(160 + 1600 / 5 * i, 0, 10, Screen.height), "");
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            GUI.Box(new Rect(0, 100 + 250 * i, Screen.width, 10), "");
-        }
-
-        if (IsReloading && VerticID >= 0)
-        {
-            tempTar = new Vector2(HorizID, VerticID);
-            IsReloading = false;
-        }
-
-        if(showLog)
-        {
-            var sk = GUI.skin.textArea.fontSize = 40;
-            GUI.TextArea(new Rect(100 , 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
-            GUI.TextArea(new Rect(100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
-        }
-        //畫出瞄準區域
-        GUI.Box(new Rect(160 + 1600 / 5 * tempTar.x, 600 - 250 * tempTar.y, 320, 250), "");
-    }
-
-    Vector3[,] ShootPoint = new Vector3[5, 3];
-
-    void SetTarget()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                Vector3 gPos = new Vector3(320 + 1600 / 5 * i, 225 + 250 * j, 0);
-                ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
-                //Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
-            }
-        }
-
-        initPos = true;
-    }
 }
