@@ -75,24 +75,22 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
 
     }
 
-    private void Update()
+    public void BeHit(int Horizental, int Vertical)
     {
-        var NowPos = Camera.main.WorldToScreenPoint(this.transform.position);
-        //Debug.Log(NowPos + " / " + TargetSystem.ShootPoint[H_pos, 0]);
-        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 0].y)
-            V_pos = 0;
-        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 1].y)
-            V_pos = 1;
-        if (NowPos.y > TargetSystem.ShootPoint[H_pos, 2].y)
-            V_pos = 2;
-    }
-    public void BeNotified(int Horizental, int Vertical)
-    {
-        if(Horizental == H_pos && Vertical == V_pos)
+        try
         {
-            ObserverSystem.share.Notify(this.name, AnimalState.Saved);
+            MainTask.Singleton.AddTask(delegate
+            {
+                if (Horizental == H_pos && Vertical == V_pos && _FSM.NowState == _ani.Traped)
+                {
+                    ObserverSystem.share.Notify(this.name, AnimalState.Saved);
+                }
+            });
         }
-
+        catch (Exception e)
+        {
+            Debug.Log("Error convert, message" + e.Message + ", reason: " + e.StackTrace + ", Text: ");
+        }
     }
 }
 

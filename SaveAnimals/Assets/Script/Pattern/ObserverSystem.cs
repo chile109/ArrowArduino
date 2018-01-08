@@ -6,6 +6,7 @@ using UnityEngine;
 public interface ObDataserver
 {
     void BeNotified(string AniName, AnimalState state);
+    void BeHit(int Horizental, int Vertical);
 }
 
 
@@ -49,9 +50,16 @@ public class ObserverSystem : MonoBehaviour
 
     public void Notify(string AniName, AnimalState state)
     {
-        Debug.Log(AniName + ": " + state);
+        //Debug.Log(AniName + ": " + state);
         foreach (var theObserver in m_ObDateServers)
             Task.Run(() => theObserver.BeNotified(AniName, state));
+    }
+
+    public void HitNotify(int _hori, int _verti)
+    {
+        //Debug.Log(AniName + ": " + state);
+        foreach (var theObserver in m_ObDateServers)
+            Task.Run(() => theObserver.BeHit(_hori, _verti));
 
     }
 }

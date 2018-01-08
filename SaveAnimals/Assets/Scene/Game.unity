@@ -712,7 +712,7 @@ MonoBehaviour:
   m_targetPos: {x: 0, y: 0, z: 0}
   Bubble: {fileID: 172112996}
   InitPos: {x: 0, y: 0, z: 0}
-  H_pos: 0
+  H_pos: 1
   V_pos: 0
 --- !u!1 &1105024114
 GameObject:
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_targetPos: {x: 0, y: 0, z: 0}
   Bubble: {fileID: 857124462}
   InitPos: {x: 0, y: 0, z: 0}
-  H_pos: 0
+  H_pos: 3
   V_pos: 0
 --- !u!4 &1223299030 stripped
 Transform:

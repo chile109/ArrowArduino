@@ -122,9 +122,10 @@ public class BowController : MonoBehaviour
     }
     void shootArrow(Vector3 goal)
     {
-        LeanTween.move(Arrow.gameObject, goal, 2f).setEase(LeanTweenType.easeInQuad)
+        LeanTween.move(Arrow.gameObject, goal, 1f).setEase(LeanTweenType.easeInQuad)
                  .setOnComplete(_ =>
         {
+            ObserverSystem.share.HitNotify(HorizID, VerticID); 
             Debug.Log("Hit");
             Arrow.position = InitPosition;
             IsReloading = false;
