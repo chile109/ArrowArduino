@@ -48,8 +48,6 @@ public class BowController : MonoBehaviour
 
     void Update()
     {
-
-        ArrowVertivcal(test_val);
         if (sp.IsOpen)
         {
             try
@@ -101,7 +99,7 @@ public class BowController : MonoBehaviour
     }
 
 
-    void ArrowVertivcal(int _val)
+    public void ArrowVertivcal(int _val)
     {
         TargetSystem.VerticalLog = _val;
         if (_val - pre_val > Tonometer.Threshold && VerticID >= 0)
@@ -163,11 +161,11 @@ public class BowController : MonoBehaviour
 
 
 
-    void ArrowHorizental(int _val)
+    public void ArrowHorizental(int _val)
     {
         TargetSystem.HorizentalLog = _val;
         Vector3 m_rot = Arrow.rotation.eulerAngles;
-        if (_val > Compass.LeftMin && _val <= Compass.Left2)
+        if (_val >= Compass.LeftMin && _val <= Compass.Left2)
         {
             HorizID = 0;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 60);
