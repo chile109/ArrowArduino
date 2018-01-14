@@ -7,20 +7,25 @@ public class ANI_Traped : BaseState
     public override void StateDoing(GameObject Obj)
     {
         AnimalController2 Control = Obj.GetComponent<AnimalController2>();
+        Control.InBubble = true;
 
         Animator _animat = Obj.GetComponent<Animator>();
         _animat.SetTrigger("IsArrested");
 
-        Vector3 InitPos = Obj.transform.position;
+        Vector3 _InitPos = Obj.transform.position;
 
         Vector3 goal = new Vector3(Obj.transform.position.x, 3, Obj.transform.position.z);
 
-        LeanTween.move(Obj, goal, 10f).setOnUpdate((Vector2 val) =>
+        LeanTween.move(Obj, goal, 3f).setOnUpdate((Vector2 val) =>
         {
-            Debug.Log(val);
             var NowPos = Camera.main.WorldToScreenPoint(Obj.transform.position);
 
-            //Debug.Log(NowPos + " / " + TargetSystem.ShootPoint[H_pos, 0]);
+            if (!Control.InBubble)
+            {
+                UFOController.HuntFinish = true;
+                LeanTween.cancel(Obj);
+            }
+                
             if (NowPos.y > TargetSystem.ShootPoint[Control.H_pos, 0].y)
                 Control.V_pos = 0;
             if (NowPos.y > TargetSystem.ShootPoint[Control.H_pos, 1].y)
@@ -30,11 +35,9 @@ public class ANI_Traped : BaseState
 
         }).setOnComplete(_ =>
         {
-            Debug.Log("goal");
+            Obj.SetActive(false);
+            ObserverSystem.share.Notify(Obj.name, AnimalState.Idle);
             UFOController.HuntFinish = true;
-            Obj.transform.position = InitPos;
-            Obj.GetComponent<AnimalController2>().BubbleOff();
-            _animat.Play("Standby");
         });
     }
 }

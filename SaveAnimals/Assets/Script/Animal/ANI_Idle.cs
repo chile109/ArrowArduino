@@ -1,33 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ANI_Idle : BaseState
 {
     public override void StateDoing(GameObject Obj)
     {
-        Animator _animat = Obj.GetComponent<Animator>();
-        _animat.SetTrigger("Idle");
+        Obj.transform.position = Obj.GetComponent<AnimalController2>().SpawnPos;
+        Init(Obj);
     }
 
-    /// <summary>
-    /// 移動邏輯
-    /// </summary>
-    /// <param name="Obj">Object.</param>
-    void fishAround(GameObject Obj)
+    public async void Init(GameObject _obj)
     {
-        //Debug.Log("Animal idle!");
-        var control = Obj.GetComponent<AnimalController>();
-
-        Vector3 pos = Vector3.MoveTowards(Obj.transform.position,
-                 control.m_targetPos, control.MoveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(pos, control.m_targetPos) < 0.1f)
+        await Task.Delay(TimeSpan.FromSeconds(1));
+        MainTask.Singleton.AddTask(delegate
         {
-            control.m_target = control.m_target == 0 ? Target.Right : 0;
-            control.SetTarget();
-        }
+            _obj.GetComponent<AnimalController2>().BubbleOff();
 
-        Obj.transform.position = pos;
+            _obj.SetActive(true);
+        });
     }
 }

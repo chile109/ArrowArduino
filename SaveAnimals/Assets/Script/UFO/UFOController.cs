@@ -46,7 +46,7 @@ public class UFOController : MonoBehaviour {
         await Task.Delay(TimeSpan.FromSeconds(_duration));
         TargetID  = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
-        Debug.Log(m_Targets[TargetID].position.x);
+        //Debug.Log(m_Targets[TargetID].position.x);
 
         startHunt = true;
     }

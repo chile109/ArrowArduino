@@ -11,11 +11,11 @@ public class GoldenFinger : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.LeftArrow) &&  H_Force > Compass.LeftMin)
+        if(Input.GetKey(KeyCode.LeftArrow) &&  H_Force > Compass.LeftMin)
         {
             H_Force -= 1;
         }
-        if(Input.GetKeyDown(KeyCode.RightArrow) && H_Force < Compass.RightMax)
+        if(Input.GetKey(KeyCode.RightArrow) && H_Force < Compass.RightMax)
         {
             H_Force += 1;
         }

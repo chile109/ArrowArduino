@@ -21,7 +21,7 @@ public class BowController : MonoBehaviour
 
     public static bool IsReloading = false;
 
-    public static int VerticID;   //Ｙ軸編號
+    public static int  VerticID;   //Ｙ軸編號
     public static int HorizID;    //Ｘ軸編號
 
     public void Start()
@@ -120,11 +120,12 @@ public class BowController : MonoBehaviour
     }
     void shootArrow(Vector3 goal)
     {
+        Vector2Int m_target = new Vector2Int(HorizID, VerticID);
         LeanTween.move(Arrow.gameObject, goal, 1f).setEase(LeanTweenType.easeInQuad)
                  .setOnComplete(_ =>
         {
-            ObserverSystem.share.HitNotify(HorizID, VerticID); 
-            Debug.Log("Hit");
+            Debug.Log(m_target.x + "\\" + m_target.y);
+            ObserverSystem.share.HitNotify(m_target.x, m_target.y); 
             Arrow.position = InitPosition;
             IsReloading = false;
         });

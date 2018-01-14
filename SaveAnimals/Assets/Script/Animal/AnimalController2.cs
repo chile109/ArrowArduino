@@ -8,9 +8,9 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
 {
     public Animal _ani = new Animal();
     public StateMachine _FSM;
-    public Vector3 m_targetPos;
     public GameObject Bubble;
-    public Vector3 InitPos;
+    public bool InBubble = false;
+    public Vector3 SpawnPos;
 
     public int H_pos;
     public int V_pos;
@@ -20,7 +20,7 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         ObserverSystem.share.Attach(this);
         _FSM = new StateMachine();
         _FSM.NowState = _ani.idle;
-        InitPos = Camera.main.WorldToViewportPoint(this.transform.position);
+        SpawnPos = this.transform.transform.position;
     }
 
     public void BubbleOn()
@@ -41,7 +41,7 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
            {
                if (AniName == this.name || AniName == "All")
                {
-                   Debug.Log(this.name + ": " + state);
+                   //Debug.Log(this.name + ": " + state);
                    switch (state)
                    {
                        case AnimalState.Idle:
@@ -83,6 +83,7 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
             {
                 if (Horizental == H_pos && Vertical == V_pos && _FSM.NowState == _ani.Traped)
                 {
+                    Debug.Log("Hit " + this.name);
                     ObserverSystem.share.Notify(this.name, AnimalState.Saved);
                 }
             });
