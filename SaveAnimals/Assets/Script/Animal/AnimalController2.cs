@@ -81,9 +81,10 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         {
             MainTask.Singleton.AddTask(delegate
             {
+                //Debug.Log(_FSM.NowState);
                 if (Horizental == H_pos && Vertical == V_pos && _FSM.NowState == _ani.Traped)
                 {
-                    Debug.Log("Hit " + this.name);
+                    //Debug.Log("Hit " + this.name);
                     ObserverSystem.share.Notify(this.name, AnimalState.Saved);
                 }
             });

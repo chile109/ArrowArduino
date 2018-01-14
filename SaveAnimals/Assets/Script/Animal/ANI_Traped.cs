@@ -16,7 +16,7 @@ public class ANI_Traped : BaseState
 
         Vector3 goal = new Vector3(Obj.transform.position.x, 3, Obj.transform.position.z);
 
-        LeanTween.move(Obj, goal, 3f).setOnUpdate((Vector2 val) =>
+        LeanTween.move(Obj, goal, 10f).setOnUpdate((Vector2 val) =>
         {
             var NowPos = Camera.main.WorldToScreenPoint(Obj.transform.position);
 

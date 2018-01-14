@@ -12,6 +12,7 @@ public class ANI_Saved : BaseState
     {
         AnimalController2 Control = Obj.GetComponent<AnimalController2>();
         Control.InBubble = false;
+        Control.BubbleOff();
 
         Animator _animat = Obj.GetComponent<Animator>();
         _animat.SetTrigger("IsSaved");

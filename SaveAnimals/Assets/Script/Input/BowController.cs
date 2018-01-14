@@ -104,8 +104,8 @@ public class BowController : MonoBehaviour
         TargetSystem.VerticalLog = _val;
         if (_val - pre_val > Tonometer.Threshold && VerticID >= 0)
         {
-            Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
-            Debug.Log("HorizID:" + HorizID + "VerticID:" + VerticID);
+            //Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
+            //Debug.Log("HorizID:" + HorizID + "VerticID:" + VerticID);
             pre_val = _val;
             IsReloading = true;
 
@@ -121,10 +121,10 @@ public class BowController : MonoBehaviour
     void shootArrow(Vector3 goal)
     {
         Vector2Int m_target = new Vector2Int(HorizID, VerticID);
-        LeanTween.move(Arrow.gameObject, goal, 1f).setEase(LeanTweenType.easeInQuad)
+        LeanTween.move(Arrow.gameObject, goal, 0.3f).setEase(LeanTweenType.easeInQuad)
                  .setOnComplete(_ =>
         {
-            Debug.Log(m_target.x + "\\" + m_target.y);
+            //Debug.Log(m_target.x + "\\" + m_target.y);
             ObserverSystem.share.HitNotify(m_target.x, m_target.y); 
             Arrow.position = InitPosition;
             IsReloading = false;
