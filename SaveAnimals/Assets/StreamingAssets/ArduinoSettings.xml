@@ -9,6 +9,14 @@
       <RightMax>50</RightMax>
       <Threshold>10</Threshold>
   </Compass>
+  <OffsetX>
+      <Min>10</Min>
+      <Max>50</Max>
+  </OffsetX>
+  <OffsetZ>
+      <Min>10</Min>
+      <Max>50</Max>
+  </OffsetZ>
   <Port>
       <Boudrate>9600</Boudrate>
       <Portname></Portname>
