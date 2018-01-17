@@ -64,4 +64,16 @@ public class TargetSystem : MonoBehaviour {
 
         initPos = true;
     }
+
+    public void Xoffset(int x)
+    {
+        if (x > OffsetX.Max || x < OffsetX.Min)
+            Debug.Log("Fix Direction!!");
+    }
+
+    public void Zoffset(int z)
+    {
+        if (z > OffsetZ.Max || z < OffsetZ.Min)
+            Debug.Log("Fix Direction!!");
+    }
 }

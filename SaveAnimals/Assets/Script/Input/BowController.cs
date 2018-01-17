@@ -66,6 +66,12 @@ public class BowController : MonoBehaviour
                         case "Tonometer":
                             ArrowVertivcal(OneItem.Value);
                             break;
+                        case "OffsetX":
+                            TarSystem.Xoffset(OneItem.Value);
+                            break;
+                        case "OffsetZ":
+                            TarSystem.Zoffset(OneItem.Value);
+                            break;
                         default:
                             break;
                     }

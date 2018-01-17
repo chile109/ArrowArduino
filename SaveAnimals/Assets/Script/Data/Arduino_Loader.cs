@@ -88,6 +88,36 @@ public class Arduino_Loader : MonoBehaviour
 
                     }
                 }
+                if (X.Name == "OffetX")
+                {
+                    foreach (XmlElement Direc in X.ChildNodes)
+                    {
+
+                        if (Direc.Name == "Min")
+                        {
+                            OffsetX.Min = int.Parse(Direc.InnerText);
+                        }
+                        if (Direc.Name == "Max")
+                        {
+                            OffsetX.Max = int.Parse(Direc.InnerText);
+                        }
+                    }
+                }
+                if (X.Name == "OffsetZ")
+                {
+                    foreach (XmlElement Direc in X.ChildNodes)
+                    {
+
+                        if (Direc.Name == "Min")
+                        {
+                            OffsetZ.Min = int.Parse(Direc.InnerText);
+                        }
+                        if (Direc.Name == "Max")
+                        {
+                            OffsetZ.Max = int.Parse(Direc.InnerText);
+                        }
+                    }
+                }
 
             }
         }
@@ -166,4 +196,16 @@ public static class Compass
     public static int Right3 = 0;
     public static int RightMax = 0;
     public static int Threshold = 0;
+}
+
+public static class OffsetX
+{
+    public static int Min = 30;
+    public static int Max = 30;
+}
+
+public static class OffsetZ
+{
+    public static int Min = 30;
+    public static int Max = 30;
 }
