@@ -8,12 +8,10 @@ using System;
 
 public class BowController : MonoBehaviour
 {
-    public TargetSystem TarSystem;
-
     private static SerialPort sp;
     static Dictionary<string, int> data = new Dictionary<string, int>();    //訊號資訊
     Vector3 InitPosition;
-
+    public GameObject Warning;
     public int pre_val; //前訊號值
 
     public int test_val;
@@ -28,7 +26,6 @@ public class BowController : MonoBehaviour
     {
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
-
     }
 
     /// <summary>
@@ -36,7 +33,7 @@ public class BowController : MonoBehaviour
     /// </summary>
     public static void OpenPort()
     {
-
+        
         sp = new SerialPort(Port.portname, Port.baudrate);
 
         if (Port.portname.Length > 1)
@@ -67,10 +64,10 @@ public class BowController : MonoBehaviour
                             ArrowVertivcal(OneItem.Value);
                             break;
                         case "OffsetX":
-                            TarSystem.Xoffset(OneItem.Value);
+                            Xoffset(OneItem.Value);
                             break;
                         case "OffsetZ":
-                            TarSystem.Zoffset(OneItem.Value);
+                            Zoffset(OneItem.Value);
                             break;
                         default:
                             break;
@@ -82,6 +79,13 @@ public class BowController : MonoBehaviour
                 Debug.Log(ex);
             }
         }
+
+        if (Error1 || Error2 || Error3 || Error4)
+            Warning.SetActive(true);
+        else
+            Warning.SetActive(false);
+            
+            
     }
 
     /// <summary>
@@ -137,37 +141,39 @@ public class BowController : MonoBehaviour
         });
     }
 
+    private bool Error1 = false;
     private void ForceView(int _val)
     {
         //Debug.Log("force");
         pre_val = _val;
 
-        if (_val < Tonometer.InitPow && _val >= Tonometer.Pow2)
+        if (_val <= Tonometer.InitPow && _val >= Tonometer.Pow2)
         {
             VerticID = 0;
             Arrow.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            Error1 = false;
         }
 
         else if (_val < Tonometer.Pow2 && _val >= Tonometer.Pow3)
         {
             VerticID = 1;
             Arrow.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            Error1 = false;
         }
 
         else if (_val < Tonometer.Pow3)
         {
             VerticID = 2;
             Arrow.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            Error1 = false;
         }
         else
         {
-            VerticID = -1;
-            Arrow.localScale = Vector3.one;
+            Error1 = true;
         }
     }
 
-
-
+    private bool Error2 = false;
     public void ArrowHorizental(int _val)
     {
         TargetSystem.HorizentalLog = _val;
@@ -176,38 +182,60 @@ public class BowController : MonoBehaviour
         {
             HorizID = 0;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 60);
+            Error2 = false;
         }
         else if (_val > Compass.Left2 && _val <= Compass.Left3)
         {
             HorizID = 1;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 40);
+            Error2 = false;
         }
 
         else if (_val > Compass.Left3 && _val <= Compass.Middle)
         {
             HorizID = 2;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 20);
+            Error2 = false;
         }
         else if (_val > Compass.Middle && _val <= Compass.Right3)
         {
             HorizID = 3;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -20);
+            Error2 = false;
         }
         else if (_val > Compass.Right3 && _val <= Compass.Right2)
         {
             HorizID = 4;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -40);
+            Error2 = false;
         }
         else if (_val > Compass.Right2 && _val <= Compass.RightMax)
         {
             HorizID = 5;
             Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, -60);
+            Error2 = false;
         }
         else
         {
-            HorizID = 2;
-            Arrow.eulerAngles = new Vector3(m_rot.x, m_rot.y, 0);
+            Error2 = true;
         }
+    }
+    private bool Error3 = false;
+    public void Xoffset(int x)
+    {
+        if (x > OffsetX.Max || x < OffsetX.Min)
+            Error3 = true;
+        else
+            Error3 = false;
+    }
+
+    private bool Error4 = false;
+    public void Zoffset(int z)
+    {
+        if (z > OffsetZ.Max || z < OffsetZ.Min)
+            Error4 = true;
+        else
+            Error4 = false;
     }
 
 }

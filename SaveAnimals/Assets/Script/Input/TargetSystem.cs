@@ -5,7 +5,6 @@ using UnityEngine;
 public class TargetSystem : MonoBehaviour {
    
     public static Vector3[,] ShootPoint = new Vector3[6, 3]; //15宮格矩陣中心點
-
     public bool showLog = false;
 
     public static int VerticalLog = 0;
@@ -65,15 +64,4 @@ public class TargetSystem : MonoBehaviour {
         initPos = true;
     }
 
-    public void Xoffset(int x)
-    {
-        if (x > OffsetX.Max || x < OffsetX.Min)
-            Debug.Log("Fix Direction!!");
-    }
-
-    public void Zoffset(int z)
-    {
-        if (z > OffsetZ.Max || z < OffsetZ.Min)
-            Debug.Log("Fix Direction!!");
-    }
 }

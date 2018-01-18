@@ -25,7 +25,7 @@ public class Arduino_Loader : MonoBehaviour
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filepath);
             XmlNodeList nodeList = xmlDoc.SelectSingleNode("Root").ChildNodes;
-            Debug.Log("search");
+            //Debug.Log("search");
 
             foreach (XmlElement X in nodeList)
             {
@@ -101,6 +101,8 @@ public class Arduino_Loader : MonoBehaviour
                         {
                             OffsetX.Max = int.Parse(Direc.InnerText);
                         }
+
+
                     }
                 }
                 if (X.Name == "OffsetZ")
@@ -167,7 +169,7 @@ public class Arduino_Loader : MonoBehaviour
         Compass.Right2 = points[5];
 
         Debug.Log("left2:" + Compass.Left2 + "  left3:" + Compass.Left3 + "  Middle:" + Compass.Middle 
-                  + "  right3:" + Compass.Right3 + "  right2:" + Compass.Right2);
+                  + "  right3:" + Compass.Right3 + "  right2:" + Compass.Right2 );
     }
 }
 
