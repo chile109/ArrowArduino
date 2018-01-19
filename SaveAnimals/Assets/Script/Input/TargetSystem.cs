@@ -11,7 +11,7 @@ public class TargetSystem : MonoBehaviour {
     public static int HorizentalLog = 0;
 
     bool initPos = false;
-    Vector2 tempTar = new Vector2(2, 1);  //目標反灰區域
+    Vector2 tempTar = new Vector2(3, 1);  //目標反灰區域
 
     void OnGUI()
     {
@@ -23,12 +23,12 @@ public class TargetSystem : MonoBehaviour {
         //畫出15宮格
         for (int i = 0; i < 6; i++) //直線
         {
-            GUI.Box(new Rect(160 + 1600 / 5 * i, 0, 10, Screen.height), "");
+            GUI.Box(new Rect(120 + 1040 / 5 * i, 0, 10, Screen.height), "");
         }
 
         for (int i = 0; i < 4; i++) //橫線
         {
-            GUI.Box(new Rect(0, 100 + 250 * i, Screen.width, 10), "");
+            GUI.Box(new Rect(0, 50 + 150 * i, Screen.width, 10), "");
         }
 
         if (BowController.IsReloading && BowController.VerticID >= 0)
@@ -44,7 +44,7 @@ public class TargetSystem : MonoBehaviour {
             GUI.TextArea(new Rect(100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
         }
         //畫出瞄準區域
-        GUI.Box(new Rect(1600 / 5 * tempTar.x, 475 - 250 * tempTar.y, 320, 250), "");
+		GUI.Box(new Rect(16 + 1040 / 5 * tempTar.x,  350 - 150 * tempTar.y, 208, 150), "");
     }
 
 
@@ -55,7 +55,7 @@ public class TargetSystem : MonoBehaviour {
         {
             for (int j = 0; j < 3; j++)
             {
-                Vector3 gPos = new Vector3(160 + 1600 / 5 * i, 200 + 250 * j, 0);
+                Vector3 gPos = new Vector3(120 + 1040 / 5 * i, 350 + 150 * j, 0);
                 ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
                 //Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
             }
