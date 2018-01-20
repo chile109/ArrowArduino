@@ -16,7 +16,6 @@ public class ANI_Idle : BaseState
         MainTask.Singleton.AddTask(delegate
         {
             _obj.GetComponent<AnimalController2>().BubbleOff();
-
             _obj.SetActive(true);
         });
     }
