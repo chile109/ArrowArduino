@@ -14,7 +14,7 @@ public class ANI_Traped : BaseState
 
         Vector3 _InitPos = Obj.transform.position;
 
-        Vector3 goal = new Vector3(Obj.transform.position.x, 3, Obj.transform.position.z);
+        Vector3 goal = new Vector3(Obj.transform.position.x, 4, Obj.transform.position.z);
 
         LeanTween.move(Obj, goal, 10f).setOnUpdate((Vector2 val) =>
         {

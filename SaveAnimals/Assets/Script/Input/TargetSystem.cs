@@ -55,7 +55,7 @@ public class TargetSystem : MonoBehaviour {
         {
             for (int j = 0; j < 3; j++)
             {
-                Vector3 gPos = new Vector3(120 + 1040 / 5 * i, 350 + 150 * j, 0);
+                Vector3 gPos = new Vector3(120 + 1040 / 5 * i, 275 + 150 * j, 0);
                 ShootPoint[i, j] = new Vector3(GUIUtility.GUIToScreenPoint(gPos).x, GUIUtility.GUIToScreenPoint(gPos).y, 10);
                 //Debug.Log(Camera.main.ScreenToWorldPoint(ShootPoint[i, j]));
             }
