@@ -33,7 +33,12 @@ public class Arduino_Loader : MonoBehaviour
                 {
                     foreach (XmlElement Set in X.ChildNodes)
                     {
-
+						if (Set.Name == "Show") {
+							if (Set.InnerText == "true")
+								TargetSystem.showLog = true;
+							else
+								TargetSystem.showLog = false;
+						}
                         if (Set.Name == "Baudrate")
                         {
                             Port.baudrate = int.Parse(Set.InnerText);

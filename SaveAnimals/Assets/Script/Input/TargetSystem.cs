@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetSystem : MonoBehaviour {
    
     public static Vector3[,] ShootPoint = new Vector3[6, 3]; //15宮格矩陣中心點
-    public bool showLog = false;
+    public static bool showLog = false;
 
     public static int VerticalLog = 0;
     public static int HorizentalLog = 0;
@@ -20,31 +20,30 @@ public class TargetSystem : MonoBehaviour {
             SetTarget();
         }
 
-        //畫出15宮格
-        for (int i = 0; i < 6; i++) //直線
-        {
-            GUI.Box(new Rect(120 + 1040 / 5 * i, 0, 10, Screen.height), "");
-        }
+		if (showLog) 
+		{
+			//畫出15宮格
+			for (int i = 0; i < 6; i++) { //直線
+				GUI.Box (new Rect (120 + 1040 / 5 * i, 0, 10, Screen.height), "");
+			}
 
-        for (int i = 0; i < 4; i++) //橫線
-        {
-            GUI.Box(new Rect(0, 50 + 150 * i, Screen.width, 10), "");
-        }
+			for (int i = 0; i < 4; i++) { //橫線
+				GUI.Box (new Rect (0, 50 + 150 * i, Screen.width, 10), "");
+			}
 
-        if (BowController.IsReloading && BowController.VerticID >= 0)
-        {
-            tempTar = new Vector2(BowController.HorizID, BowController.VerticID);
-            BowController.IsReloading = false;
-        }
+			if (BowController.IsReloading && BowController.VerticID >= 0) {
+				tempTar = new Vector2 (BowController.HorizID, BowController.VerticID);
+				BowController.IsReloading = false;
+			}
 
-        if (showLog)
-        {
-            var sk = GUI.skin.textArea.fontSize = 40;
-            GUI.TextArea(new Rect(100, 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
-            GUI.TextArea(new Rect(100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
-        }
-        //畫出瞄準區域
-		GUI.Box(new Rect(16 + 1040 / 5 * tempTar.x,  350 - 150 * tempTar.y, 208, 150), "");
+        
+			var sk = GUI.skin.textArea.fontSize = 40;
+			GUI.TextArea (new Rect (100, 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
+			GUI.TextArea (new Rect (100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
+        
+			//畫出瞄準區域
+			GUI.Box (new Rect (16 + 1040 / 5 * tempTar.x, 350 - 150 * tempTar.y, 208, 150), "");
+		}
     }
 
 

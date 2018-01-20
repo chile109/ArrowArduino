@@ -112,7 +112,7 @@ public class BowController : MonoBehaviour
     public void ArrowVertivcal(int _val)
     {
         TargetSystem.VerticalLog = _val;
-        if (_val - pre_val > Tonometer.Threshold && VerticID >= 0)
+		if (_val - pre_val > Tonometer.Threshold && VerticID >= 0 && !IsReloading)
         {
             //Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
             //Debug.Log("HorizID:" + HorizID + "VerticID:" + VerticID);

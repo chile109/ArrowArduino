@@ -18,6 +18,7 @@
       <Max>50</Max>
   </OffsetZ>
   <Port>
+      <Show>true</Show>
       <Boudrate>9600</Boudrate>
       <Portname></Portname>
   </Port>
