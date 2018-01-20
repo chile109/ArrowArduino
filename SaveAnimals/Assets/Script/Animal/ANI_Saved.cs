@@ -27,11 +27,12 @@ public class ANI_Saved : BaseState
         {
             _obj.SetActive(false);
             ObserverSystem.share.Notify(_obj.name, AnimalState.Idle);
+
         });
 
         await Task.Delay(TimeSpan.FromSeconds(_duration));
         MainTask.Singleton.AddTask(delegate
-        {            
+        {
             _obj.SetActive(true);
         });
     }
