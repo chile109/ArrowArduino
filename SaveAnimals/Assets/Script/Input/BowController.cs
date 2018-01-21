@@ -5,10 +5,12 @@ using System.IO.Ports;
 using System.Xml;
 using System.IO;
 using System;
+using System.Threading;
 
 public class BowController : MonoBehaviour
 {
-    private static SerialPort sp;
+	private Thread receiveThread;  //用于接收消息的线程
+    private SerialPort sp;
     static Dictionary<string, int> data = new Dictionary<string, int>();    //訊號資訊
     Vector3 InitPosition;
     public GameObject Warning;
@@ -24,6 +26,7 @@ public class BowController : MonoBehaviour
 
     public void Start()
     {
+		
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
     }
@@ -31,61 +34,80 @@ public class BowController : MonoBehaviour
     /// <summary>
     /// 開啟ＵＳＢ port
     /// </summary>
-    public static void OpenPort()
+    public void OpenPort()
     {
         
         sp = new SerialPort(Port.portname, Port.baudrate);
 
         if (Port.portname.Length > 1)
         {
+			sp.ReadTimeout = 1;
             sp.Open();
-            sp.ReadTimeout = 1;
+			startThread ();
         }
     }
 
+	void startThread()
+	{
+		receiveThread = new Thread(ReceiveThread);
+		receiveThread.IsBackground = true;
+		receiveThread.Start();
+	}
+
+	private void ReceiveThread()
+	{
+		while (true)
+		{
+			if(sp != null && sp.IsOpen)
+			{
+				try
+				{
+					String strRec = sp.ReadLine();            //SerialPort读取数据有多种方法，我这里根据需要使用了ReadLine()
+					Debug.Log("Receive From Serial: " +strRec);
+
+					DistinguishSignal(sp.ReadLine());
+					MainTask.Singleton.AddTask(delegate {
+						
+					
+					foreach (var OneItem in data)
+					{
+						//Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
+
+						switch (OneItem.Key)
+						{
+						case "Compass":
+							ArrowHorizental(OneItem.Value);
+							break;
+						case "Tonometer":
+							ArrowVertivcal(OneItem.Value);
+							break;
+						case "OffsetX":
+							Xoffset(OneItem.Value);
+							break;
+						case "OffsetZ":
+							Zoffset(OneItem.Value);
+							break;
+						default:
+							break;
+						}
+						}
+					});
+				}
+				catch (Exception ex)
+				{
+					Debug.Log(ex);
+				}
+			}
+		}
+	}
+
+
     void Update()
     {
-        if (sp.IsOpen)
-        {
-            try
-            {
-                DistinguishSignal(sp.ReadLine());
-
-                foreach (var OneItem in data)
-                {
-                    Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
-
-                    switch (OneItem.Key)
-                    {
-                        case "Compass":
-                            ArrowHorizental(OneItem.Value);
-                            break;
-                        case "Tonometer":
-                            ArrowVertivcal(OneItem.Value);
-                            break;
-                        case "OffsetX":
-                            Xoffset(OneItem.Value);
-                            break;
-                        case "OffsetZ":
-                            Zoffset(OneItem.Value);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex);
-            }
-        }
-
         if (Error1 || Error2 || Error3 || Error4)
             Warning.SetActive(true);
         else
             Warning.SetActive(false);
-            
-            
     }
 
     /// <summary>

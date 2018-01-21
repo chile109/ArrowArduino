@@ -8,6 +8,7 @@ using System;
 public class Arduino_Loader : MonoBehaviour
 {
     private string filepath;
+	public BowController _bow;
     public static Arduino_Loader inst;
 
     private void Awake()
@@ -38,10 +39,13 @@ public class Arduino_Loader : MonoBehaviour
 								TargetSystem.showLog = true;
 							else
 								TargetSystem.showLog = false;
+
+
 						}
-                        if (Set.Name == "Baudrate")
+                        if (Set.Name == "BR")
                         {
                             Port.baudrate = int.Parse(Set.InnerText);
+							Debug.Log("Baudrate:" + Port.baudrate);
                         }
                         if (Set.Name == "Portname")
                         {
@@ -64,6 +68,7 @@ public class Arduino_Loader : MonoBehaviour
                         if (Pow.Name == "MaxPow")
                         {
                             Tonometer.MaxPow = int.Parse(Pow.InnerText);
+							Debug.Log("MaxPow:" + Tonometer.MaxPow);
                         }
                         if (Pow.Name == "Threshold")
                         {
@@ -134,7 +139,7 @@ public class Arduino_Loader : MonoBehaviour
         DevideTonometerParts(Tonometer.InitPow, Tonometer.MaxPow, 3);
         DevideCompassParts(Compass.LeftMin, Compass.RightMax, 6);
 
-        BowController.OpenPort();
+		_bow.OpenPort();
     }
 
     void DevideTonometerParts(int Min, int Max, int times)

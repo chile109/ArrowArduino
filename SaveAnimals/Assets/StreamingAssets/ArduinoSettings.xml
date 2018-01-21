@@ -18,8 +18,8 @@
       <Max>50</Max>
   </OffsetZ>
   <Port>
-      <Show>true</Show>
-      <Boudrate>9600</Boudrate>
-      <Portname></Portname>
+      <Show>true</Show>     
+      <Portname>COM3</Portname>
+      <BR>115200</BR>
   </Port>
 </Root>
