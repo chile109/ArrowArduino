@@ -87,9 +87,10 @@ public class BowController2 : MonoBehaviour
         resolveThread.Abort();
     }
 
+	public bool Error5 = false; //金手指用
     void Update()
     {
-        if (Error1 || Error2 || Error3 || Error4)
+        if (Error1 || Error2 || Error3 || Error4 || Error5)
             Warning.SetActive(true);
         else
             Warning.SetActive(false);

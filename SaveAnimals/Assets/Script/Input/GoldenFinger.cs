@@ -58,5 +58,17 @@ public class GoldenFinger : MonoBehaviour {
 			_bow.shootArrow (1);
 		if(Input.GetKeyUp(KeyCode.C))
 			_bow.shootArrow (0);
+
+		if (Input.GetKeyUp (KeyCode.E)) 
+		{
+			CancelInvoke ("Timer");
+			_bow.Error5 = true;
+			Invoke("Timer", 2);
+		}
+	}
+
+	void Timer()
+	{
+		_bow.Error5 = false;
 	}
 }
