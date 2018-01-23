@@ -7,8 +7,8 @@ using System;
 
 public class Arduino_Loader : MonoBehaviour
 {
+    public ForurParameterDevide LogResolve;
     private string filepath;
-	public BowController _bow;
     public static Arduino_Loader inst;
 
     private void Awake()
@@ -139,7 +139,7 @@ public class Arduino_Loader : MonoBehaviour
         DevideTonometerParts(Tonometer.InitPow, Tonometer.MaxPow, 3);
         DevideCompassParts(Compass.LeftMin, Compass.RightMax, 6);
 
-		_bow.OpenPort();
+        LogResolve.OpenPort();
     }
 
     void DevideTonometerParts(int Min, int Max, int times)

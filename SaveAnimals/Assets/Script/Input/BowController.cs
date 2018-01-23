@@ -26,7 +26,6 @@ public class BowController : MonoBehaviour
 
     public void Start()
     {
-		
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
     }

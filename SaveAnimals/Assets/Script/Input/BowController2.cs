@@ -9,9 +9,9 @@ using System.Threading;
 
 public class BowController2 : MonoBehaviour
 {
-	private Thread receiveThread;  //用于接收消息的线程
-    private SerialPort sp;
-    static Dictionary<string, int> data = new Dictionary<string, int>();    //訊號資訊
+    bool bkd = true;
+    private Thread resolveThread;  //用于接收消息的线程
+
     Vector3 InitPosition;
     public GameObject Warning;
     public int pre_val; //前訊號值
@@ -21,87 +21,72 @@ public class BowController2 : MonoBehaviour
 
     public static bool IsReloading = false;
 
-    public static int  VerticID;   //Ｙ軸編號
+    public static int VerticID;   //Ｙ軸編號
     public static int HorizID;    //Ｘ軸編號
 
     public void Start()
     {
-		
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
+
+        startThread();
     }
 
-    /// <summary>
-    /// 開啟ＵＳＢ port
-    /// </summary>
-    public void OpenPort()
+    void startThread()
     {
-        
-        sp = new SerialPort(Port.portname, Port.baudrate);
+        resolveThread = new Thread(ResolveThread);
+        resolveThread.IsBackground = true;
+        resolveThread.Start();
+    }
 
-        if (Port.portname.Length > 1)
+    private void ResolveThread()
+    {
+        while (bkd)
         {
-			sp.ReadTimeout = 5000;
-            sp.WriteTimeout= 500;
-            sp.Open();
-			startThread ();
+            try
+            {
+                //String strRec = sp.ReadLine();            //SerialPort读取数据有多种方法，我这里根据需要使用了ReadLine()
+                //Debug.Log("Receive From Serial: " + strRec);
+
+                MainTask.Singleton.AddTask(delegate
+                {
+                    foreach (var OneItem in ForurParameterDevide.data)
+                    {
+                        Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
+
+                        switch (OneItem.Key)
+                        {
+                            case "Compass":
+                                ArrowHorizental(OneItem.Value);
+                                break;
+                            case "Tonometer":
+                                ArrowVertivcal(OneItem.Value);
+                                break;
+                            case "OffsetX":
+                                Xoffset(OneItem.Value);
+                                break;
+                            case "OffsetZ":
+                                Zoffset(OneItem.Value);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+
         }
     }
 
-	void startThread()
-	{
-		receiveThread = new Thread(ReceiveThread);
-		receiveThread.IsBackground = true;
-		receiveThread.Start();
-	}
-
-	private void ReceiveThread()
-	{
-		while (true)
-		{
-			if(sp != null && sp.IsOpen)
-			{
-				try
-				{
-					String strRec = sp.ReadLine();            //SerialPort读取数据有多种方法，我这里根据需要使用了ReadLine()
-					Debug.Log("Receive From Serial: " +strRec);
-
-					DistinguishSignal(sp.ReadLine());
-
-					MainTask.Singleton.AddTask(delegate {
-						
-					foreach (var OneItem in data)
-					{
-						//Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
-
-						switch (OneItem.Key)
-						{
-						case "Compass":
-							ArrowHorizental(OneItem.Value);
-							break;
-						case "Tonometer":
-							ArrowVertivcal(OneItem.Value);
-							break;
-						case "OffsetX":
-							Xoffset(OneItem.Value);
-							break;
-						case "OffsetZ":
-							Zoffset(OneItem.Value);
-							break;
-						default:
-							break;
-						}
-						}
-					});
-				}
-				catch (Exception ex)
-				{
-					Debug.Log(ex);
-				}
-			}
-		}
-	}
-
+    private void OnApplicationQuit()
+    {
+        bkd = false;//thread沒結束abort不會砍掉thread
+        resolveThread.Abort();
+    }
 
     void Update()
     {
@@ -111,29 +96,10 @@ public class BowController2 : MonoBehaviour
             Warning.SetActive(false);
     }
 
-    /// <summary>
-    /// 訊號斷行處理
-    /// </summary>
-    /// <returns>The signal.</returns>
-    /// <param name="msg">Message.</param>
-    static void DistinguishSignal(string msg)
-    {
-        data.Clear();
-
-        Char delimiter = ':';
-        String[] substrings = msg.Split(delimiter);
-
-        string _device = substrings[0];
-        int _val = int.Parse(substrings[1]);
-
-        data.Add(_device, _val);
-    }
-
-
     public void ArrowVertivcal(int _val)
     {
         TargetSystem.VerticalLog = _val;
-		if (_val - pre_val > Tonometer.Threshold && VerticID >= 0 && !IsReloading)
+        if (_val - pre_val > Tonometer.Threshold && VerticID >= 0 && !IsReloading)
         {
             //Debug.Log("_val:" + _val + "pre:" + pre_val + " Shoot!!");
             //Debug.Log("HorizID:" + HorizID + "VerticID:" + VerticID);
@@ -156,7 +122,7 @@ public class BowController2 : MonoBehaviour
                  .setOnComplete(_ =>
         {
             //Debug.Log(m_target.x + "\\" + m_target.y);
-            ObserverSystem.share.HitNotify(m_target.x, m_target.y); 
+            ObserverSystem.share.HitNotify(m_target.x, m_target.y);
             Arrow.position = InitPosition;
             IsReloading = false;
         });

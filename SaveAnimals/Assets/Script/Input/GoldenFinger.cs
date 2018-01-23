@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoldenFinger : MonoBehaviour {
 
-    public BowController _bow;
+    public BowController2 _bow;
     // Use this for initialization
     private int H_Force = 30;
     private int V_Force = 30;
