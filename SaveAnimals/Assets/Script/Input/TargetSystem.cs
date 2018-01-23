@@ -7,6 +7,8 @@ public class TargetSystem : MonoBehaviour {
     public static Vector3[,] ShootPoint = new Vector3[6, 3]; //15宮格矩陣中心點
     public static bool showLog = false;
 
+    public Log_Tunny debug;
+
     public static int VerticalLog = 0;
     public static int HorizentalLog = 0;
 
@@ -38,11 +40,13 @@ public class TargetSystem : MonoBehaviour {
 
         
 			var sk = GUI.skin.textArea.fontSize = 40;
-			GUI.TextArea (new Rect (100, 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
-			GUI.TextArea (new Rect (100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
+			//GUI.TextArea (new Rect (100, 100, 400, 50), "VerticalLog:" + VerticalLog, sk);
+			//GUI.TextArea (new Rect (100, 200, 400, 50), "HorizentalLog:" + HorizentalLog, sk);
         
 			//畫出瞄準區域
 			GUI.Box (new Rect (16 + 1040 / 5 * tempTar.x, 350 - 150 * tempTar.y, 208, 150), "");
+
+            debug.enabled = true;
 		}
     }
 
