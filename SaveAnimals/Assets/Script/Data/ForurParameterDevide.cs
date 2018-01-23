@@ -34,7 +34,8 @@ public class ForurParameterDevide : MonoBehaviour
 
         if (Port.portname.Length > 1)
         {
-            sp.ReadTimeout = 1;
+            sp.ReadTimeout = 5000;
+			sp.WriteTimeout = 500;
             sp.Open();
             startThread();
         }
@@ -54,13 +55,13 @@ public class ForurParameterDevide : MonoBehaviour
 
             try
             {
-                String strRec = Signal;
+				String strRec = sp.ReadLine();
 
                 DistinguishSignal(strRec);
 
                 foreach (var d in data)
                 {
-                    Debug.Log(d.Key + "/" + d.Value);
+                    //Debug.Log(d.Key + "/" + d.Value);
                 }
 
             }
@@ -79,8 +80,6 @@ public class ForurParameterDevide : MonoBehaviour
     /// <param name="msg">Message.</param>
     void DistinguishSignal(string msg)
     {
-        data.Clear();
-
         Char delimiter = '+';
         String[] substrings = msg.Split(delimiter);
 

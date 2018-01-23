@@ -29,7 +29,7 @@ public class BowController2 : MonoBehaviour
         pre_val = Tonometer.InitPow;
         InitPosition = Arrow.position;
 
-        startThread();
+        //startThread();
     }
 
     void startThread()
@@ -39,17 +39,14 @@ public class BowController2 : MonoBehaviour
         resolveThread.Start();
     }
 
+	private object Lock;
     private void ResolveThread()
     {
-        while (bkd)
-        {
+        
             try
             {
-                //String strRec = sp.ReadLine();            //SerialPort读取数据有多种方法，我这里根据需要使用了ReadLine()
-                //Debug.Log("Receive From Serial: " + strRec);
-
-                MainTask.Singleton.AddTask(delegate
-                {
+				lock(Lock){
+                
                     foreach (var OneItem in ForurParameterDevide.data)
                     {
                         Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
@@ -72,14 +69,16 @@ public class BowController2 : MonoBehaviour
                                 break;
                         }
                     }
-                });
+					GC.Collect();
+              
+				}
             }
             catch (Exception ex)
             {
                 Debug.Log(ex);
             }
 
-        }
+        
     }
 
     private void OnApplicationQuit()
@@ -127,6 +126,21 @@ public class BowController2 : MonoBehaviour
             IsReloading = false;
         });
     }
+
+	public void shootArrow(int _Vertic)
+	{
+		Vector3 target = Camera.main.ScreenToWorldPoint(TargetSystem.ShootPoint[HorizID, _Vertic]);
+
+		Vector2Int m_target = new Vector2Int(HorizID, _Vertic);
+		LeanTween.move(Arrow.gameObject, target, 0.3f).setEase(LeanTweenType.easeInQuad)
+			.setOnComplete(_ =>
+				{
+					Debug.Log(m_target.x + "\\" + m_target.y);
+					ObserverSystem.share.HitNotify(m_target.x, m_target.y);
+					Arrow.position = InitPosition;
+					IsReloading = false;
+				});
+	}
 
     private bool Error1 = false;
     private void ForceView(int _val)

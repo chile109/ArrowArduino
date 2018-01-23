@@ -11,24 +11,52 @@ public class GoldenFinger : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKey(KeyCode.LeftArrow) &&  H_Force > Compass.LeftMin)
-        {
-            H_Force -= 1;
-        }
-        if(Input.GetKey(KeyCode.RightArrow) && H_Force < Compass.RightMax)
-        {
-            H_Force += 1;
-        }
-        if (Input.GetKey(KeyCode.Space) && V_Force > Tonometer.MaxPow)
-        {
-            V_Force -= 1;
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            V_Force = Tonometer.InitPow;
-        }
+		type2 ();
+	}
 
-        _bow.ArrowHorizental(H_Force);
-        _bow.ArrowVertivcal(V_Force);
+	void type1()
+	{
+		if(Input.GetKey(KeyCode.LeftArrow) &&  H_Force > Compass.LeftMin)
+		{
+			H_Force -= 1;
+		}
+		if(Input.GetKey(KeyCode.RightArrow) && H_Force < Compass.RightMax)
+		{
+			H_Force += 1;
+		}
+		if (Input.GetKey(KeyCode.Space) && V_Force > Tonometer.MaxPow)
+		{
+			V_Force -= 1;
+		}
+		if (Input.GetKeyUp(KeyCode.Space))
+		{
+			V_Force = Tonometer.InitPow;
+		}
+
+		_bow.ArrowHorizental(H_Force);
+		_bow.ArrowVertivcal(V_Force);
+	}
+
+	void type2()
+	{
+		if(Input.GetKey(KeyCode.Keypad1))
+			_bow.ArrowHorizental((int)(Compass.LeftMin + Compass.Left2)/2);
+		if(Input.GetKey(KeyCode.Keypad2))
+			_bow.ArrowHorizental((int)(Compass.Left2 + Compass.Left3)/2);
+		if(Input.GetKey(KeyCode.Keypad3))
+			_bow.ArrowHorizental((int)(Compass.Left3 + Compass.Middle)/2);
+		if(Input.GetKey(KeyCode.Keypad4))
+			_bow.ArrowHorizental((int)(Compass.Middle + Compass.Right2)/2);
+		if(Input.GetKey(KeyCode.Keypad5))
+			_bow.ArrowHorizental((int)(Compass.Right2 + Compass.Right3)/2);
+		if(Input.GetKey(KeyCode.Keypad6))
+			_bow.ArrowHorizental((int)(Compass.Right3 + Compass.RightMax)/2);
+
+		if (Input.GetKeyUp (KeyCode.A))
+			_bow.shootArrow (2);
+		if(Input.GetKeyUp(KeyCode.B))
+			_bow.shootArrow (1);
+		if(Input.GetKeyUp(KeyCode.C))
+			_bow.shootArrow (0);
 	}
 }
