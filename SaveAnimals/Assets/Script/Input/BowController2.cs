@@ -39,46 +39,47 @@ public class BowController2 : MonoBehaviour
         resolveThread.Start();
     }
 
-	private object Lock;
+    private object Lock;
     private void ResolveThread()
     {
-        
-            try
+
+        try
+        {
+            lock (Lock)
             {
-				lock(Lock){
-                
-                    foreach (var OneItem in ForurParameterDevide.data)
+
+                foreach (var OneItem in ForurParameterDevide.data)
+                {
+                    Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
+
+                    switch (OneItem.Key)
                     {
-                        Debug.Log("Key = " + OneItem.Key + ", Value = " + OneItem.Value);
-
-                        switch (OneItem.Key)
-                        {
-                            case "Compass":
-                                ArrowHorizental(OneItem.Value);
-                                break;
-                            case "Tonometer":
-                                ArrowVertivcal(OneItem.Value);
-                                break;
-                            case "OffsetX":
-                                Xoffset(OneItem.Value);
-                                break;
-                            case "OffsetZ":
-                                Zoffset(OneItem.Value);
-                                break;
-                            default:
-                                break;
-                        }
+                        case "Compass":
+                            ArrowHorizental(OneItem.Value);
+                            break;
+                        case "Tonometer":
+                            ArrowVertivcal(OneItem.Value);
+                            break;
+                        case "OffsetX":
+                            Xoffset(OneItem.Value);
+                            break;
+                        case "OffsetZ":
+                            Zoffset(OneItem.Value);
+                            break;
+                        default:
+                            break;
                     }
-					GC.Collect();
-              
-				}
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex);
-            }
+                }
+                GC.Collect();
 
-        
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+
+
     }
 
     private void OnApplicationQuit()
@@ -87,7 +88,7 @@ public class BowController2 : MonoBehaviour
         resolveThread.Abort();
     }
 
-	public bool Error5 = false; //金手指用
+    public bool Error5 = false; //金手指用
     void Update()
     {
         if (Error1 || Error2 || Error3 || Error4 || Error5)
@@ -128,20 +129,27 @@ public class BowController2 : MonoBehaviour
         });
     }
 
-	public void shootArrow(int _Vertic)
-	{
-		Vector3 target = Camera.main.ScreenToWorldPoint(TargetSystem.ShootPoint[HorizID, _Vertic]);
+    public void shootArrow(int _Vertic)
+    {
+        Vector3 target = Camera.main.ScreenToWorldPoint(TargetSystem.ShootPoint[HorizID, _Vertic]);
 
-		Vector2Int m_target = new Vector2Int(HorizID, _Vertic);
-		LeanTween.move(Arrow.gameObject, target, 0.3f).setEase(LeanTweenType.easeInQuad)
-			.setOnComplete(_ =>
-				{
-					Debug.Log(m_target.x + "\\" + m_target.y);
-					ObserverSystem.share.HitNotify(m_target.x, m_target.y);
-					Arrow.position = InitPosition;
-					IsReloading = false;
-				});
-	}
+        Vector2Int m_target = new Vector2Int(HorizID, _Vertic);
+        LeanTween.move(Arrow.gameObject, target, 0.3f).setEase(LeanTweenType.easeInQuad)
+            .setOnComplete(_ =>
+                {
+                    Debug.Log(m_target.x + "\\" + m_target.y);
+                    ObserverSystem.share.HitNotify(m_target.x, m_target.y);
+                    Arrow.gameObject.SetActive(false);
+                    Arrow.position = InitPosition;
+                    Invoke("ArrowRespawn", 2);
+                });
+    }
+
+    void ArrowRespawn()
+    {
+        Arrow.gameObject.SetActive(true);
+        IsReloading = false;
+    }
 
     private bool Error1 = false;
     private void ForceView(int _val)

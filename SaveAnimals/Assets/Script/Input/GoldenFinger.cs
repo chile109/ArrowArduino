@@ -37,28 +37,40 @@ public class GoldenFinger : MonoBehaviour {
 		_bow.ArrowVertivcal(V_Force);
 	}
 
+
 	void type2()
 	{
-        if(Input.GetKey(KeyCode.Alpha1))
-			_bow.ArrowHorizental((int)(Compass.LeftMin + Compass.Left2)/2);
-        if(Input.GetKey(KeyCode.Alpha2))
-			_bow.ArrowHorizental((int)(Compass.Left2 + Compass.Left3)/2);
-        if(Input.GetKey(KeyCode.Alpha3))
-			_bow.ArrowHorizental((int)(Compass.Left3 + Compass.Middle)/2);
-        if(Input.GetKey(KeyCode.Alpha4))
-			_bow.ArrowHorizental((int)(Compass.Middle + Compass.Right2)/2);
-        if(Input.GetKey(KeyCode.Alpha5))
-			_bow.ArrowHorizental((int)(Compass.Right2 + Compass.Right3)/2);
-        if(Input.GetKey(KeyCode.Alpha6))
-			_bow.ArrowHorizental((int)(Compass.Right3 + Compass.RightMax)/2);
+        if (!BowController2.IsReloading)
+        {
+            if (Input.GetKey(KeyCode.Alpha1))
+                _bow.ArrowHorizental((int)(Compass.LeftMin + Compass.Left2) / 2);
+            if (Input.GetKey(KeyCode.Alpha2))
+                _bow.ArrowHorizental((int)(Compass.Left2 + Compass.Left3) / 2);
+            if (Input.GetKey(KeyCode.Alpha3))
+                _bow.ArrowHorizental((int)(Compass.Left3 + Compass.Middle) / 2);
+            if (Input.GetKey(KeyCode.Alpha4))
+                _bow.ArrowHorizental((int)(Compass.Middle + Compass.Right2) / 2);
+            if (Input.GetKey(KeyCode.Alpha5))
+                _bow.ArrowHorizental((int)(Compass.Right2 + Compass.Right3) / 2);
+            if (Input.GetKey(KeyCode.Alpha6))
+                _bow.ArrowHorizental((int)(Compass.Right3 + Compass.RightMax) / 2);
 
-		if (Input.GetKeyUp (KeyCode.A))
-			_bow.shootArrow (2);
-		if(Input.GetKeyUp(KeyCode.B))
-			_bow.shootArrow (1);
-		if(Input.GetKeyUp(KeyCode.C))
-			_bow.shootArrow (0);
-
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                BowController2.IsReloading = true;
+                _bow.shootArrow(2);
+            }
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                BowController2.IsReloading = true;
+                _bow.shootArrow(1);
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                BowController2.IsReloading = true;
+                _bow.shootArrow(0);
+            }
+        }
 		if (Input.GetKeyUp (KeyCode.E)) 
 		{
 			CancelInvoke ("Timer");
