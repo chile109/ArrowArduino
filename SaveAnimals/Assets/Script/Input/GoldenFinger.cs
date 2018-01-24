@@ -39,17 +39,17 @@ public class GoldenFinger : MonoBehaviour {
 
 	void type2()
 	{
-		if(Input.GetKey(KeyCode.Keypad1))
+        if(Input.GetKey(KeyCode.Alpha1))
 			_bow.ArrowHorizental((int)(Compass.LeftMin + Compass.Left2)/2);
-		if(Input.GetKey(KeyCode.Keypad2))
+        if(Input.GetKey(KeyCode.Alpha2))
 			_bow.ArrowHorizental((int)(Compass.Left2 + Compass.Left3)/2);
-		if(Input.GetKey(KeyCode.Keypad3))
+        if(Input.GetKey(KeyCode.Alpha3))
 			_bow.ArrowHorizental((int)(Compass.Left3 + Compass.Middle)/2);
-		if(Input.GetKey(KeyCode.Keypad4))
+        if(Input.GetKey(KeyCode.Alpha4))
 			_bow.ArrowHorizental((int)(Compass.Middle + Compass.Right2)/2);
-		if(Input.GetKey(KeyCode.Keypad5))
+        if(Input.GetKey(KeyCode.Alpha5))
 			_bow.ArrowHorizental((int)(Compass.Right2 + Compass.Right3)/2);
-		if(Input.GetKey(KeyCode.Keypad6))
+        if(Input.GetKey(KeyCode.Alpha6))
 			_bow.ArrowHorizental((int)(Compass.Right3 + Compass.RightMax)/2);
 
 		if (Input.GetKeyUp (KeyCode.A))
