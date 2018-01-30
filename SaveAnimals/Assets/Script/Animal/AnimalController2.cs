@@ -23,6 +23,18 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         SpawnPos = this.transform.transform.position;
     }
 
+    void OnMouseDown()
+    {
+        if (InBubble)
+        {
+            Debug.Log(this.gameObject.name);
+            UImanager.point += 5;
+            ObserverSystem.share.Notify(this.name, AnimalState.Saved);
+            InBubble = false;
+            BubbleOff();
+        }
+    }
+
     public void BubbleOn()
     {
         Bubble.SetActive(true);
