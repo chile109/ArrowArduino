@@ -11,8 +11,10 @@ public class VideoController : MonoBehaviour {
 
     private void Start()
     {
+        Cursor.visible = false;
+
         _playerB.loopPointReached += delegate {
-            SceneManager.LoadSceneAsync("Game");
+            SceneManager.LoadSceneAsync("Game 1");
         };
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UImanager : MonoBehaviour {
 
@@ -16,6 +17,8 @@ public class UImanager : MonoBehaviour {
 		sec = 90;
 		point = 0;
 		InvokeRepeating ("CountDown", 0, 1);
+
+        Cursor.visible = true;
 	}
 
 	void Update()
@@ -32,6 +35,7 @@ public class UImanager : MonoBehaviour {
 		{
 			sec = 90;
 			point = 0;
+            SceneManager.LoadSceneAsync("Wellcome");
 		}
 	}
 }
