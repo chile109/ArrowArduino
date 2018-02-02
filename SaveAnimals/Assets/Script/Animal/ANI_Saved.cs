@@ -17,7 +17,15 @@ public class ANI_Saved : BaseState
         Animator _animat = Obj.GetComponent<Animator>();
         _animat.SetTrigger("IsSaved");
 
-        Respawn(3, Obj);
+        MainTask.Singleton.AddTask(delegate
+        {
+            LeanTween.move(Obj, Obj.GetComponent<AnimalController2>().SpawnPos, 1.5f).setOnComplete(_ =>
+            {
+                ObserverSystem.share.Notify(Obj.name, AnimalState.Idle);
+            });
+        });
+                                   
+        //Respawn(3, Obj);
     }
 
     public async void Respawn(double _duration, GameObject _obj)
@@ -36,4 +44,5 @@ public class ANI_Saved : BaseState
             _obj.SetActive(true);
         });
     }
+
 }
