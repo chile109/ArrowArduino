@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
@@ -19,8 +20,16 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
     {
         ObserverSystem.share.Attach(this);
         _FSM = new StateMachine();
-        _FSM.NowState = _ani.idle;
         SpawnPos = this.transform.transform.position;
+        if (SceneManager.GetActiveScene().name == "Success")
+        {
+            ObserverSystem.share.Notify("All", AnimalState.Success);
+        }
+        else
+        {
+            _FSM.NowState = _ani.idle;
+
+        }
     }
 
     void OnMouseDown()

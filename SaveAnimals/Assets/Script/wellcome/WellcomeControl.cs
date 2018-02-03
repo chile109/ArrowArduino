@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Video;
-using UnityEngine.SceneManagement;
 
-public class VideoController : MonoBehaviour {
+public class WellcomeControl : MonoBehaviour {
 
     public VideoPlayer _playerA;
     public VideoPlayer _playerB;
+    public GameObject obj;
 
     private void Start()
     {
@@ -19,10 +18,12 @@ public class VideoController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             _playerA.Pause();
+            obj.SetActive(false);
             _playerB.gameObject.SetActive(true);
         }
     }

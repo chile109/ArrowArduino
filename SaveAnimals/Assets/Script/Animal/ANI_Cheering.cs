@@ -7,6 +7,6 @@ public class ANI_Cheering : BaseState
     public override void StateDoing(GameObject Obj)
     {
         Animator _animat = Obj.GetComponent<Animator>();
-        _animat.SetTrigger("Succeed");
+        _animat.Play("Success");
     }
 }
