@@ -30,7 +30,7 @@ public class UImanager : MonoBehaviour {
 		point = 0;
 		InvokeRepeating ("CountDown", 0, 1);
         ObserverSystem.share.GameOver = false;
-        Cursor.visible = true;
+        Cursor.visible = false;
 
 	}
 
@@ -61,7 +61,7 @@ public class UImanager : MonoBehaviour {
 
             NowScore.text = point.ToString();
             TodayBest.text = BestScore.ToString();
-            HistoryBest.text = "150";
+            HistoryBest.text = "100";
 
             Invoke("GoResult", 10);
 		}
@@ -69,7 +69,7 @@ public class UImanager : MonoBehaviour {
 
     void GoResult()
     {
-        if(point > 75)
+        if(point > 40)
             SceneManager.LoadSceneAsync("Success");
         else
             SceneManager.LoadSceneAsync("Fail");
