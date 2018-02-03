@@ -7,6 +7,7 @@ public class ANI_Traped : BaseState
     public override void StateDoing(GameObject Obj)
     {
         AnimalController2 Control = Obj.GetComponent<AnimalController2>();
+        Control.BubbleOn();
         Control.InBubble = true;
 
         Animator _animat = Obj.GetComponent<Animator>();
@@ -14,7 +15,7 @@ public class ANI_Traped : BaseState
 
         Vector3 _InitPos = Obj.transform.position;
 
-        Vector3 goal = new Vector3(Obj.transform.position.x, 4, Obj.transform.position.z);
+        Vector3 goal = new Vector3(Obj.transform.position.x, 3.5f, Obj.transform.position.z);
 
         LeanTween.move(Obj, goal, 10f).setOnUpdate((Vector2 val) =>
         {
