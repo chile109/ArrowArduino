@@ -21,17 +21,15 @@ public class UImanager : MonoBehaviour {
 		point = 0;
 		InvokeRepeating ("CountDown", 0, 1);
 
-        //Cursor.visible = true;
-        //Cursor.SetCursor(cursorTexture, hotSpot, cursorMode );
-
+        Cursor.visible = true;
 
 	}
 
 	void Update()
 	{
         _cursor.transform.position = Input.mousePosition;
-		GameTime.text = "Time:" + sec +"s";
-		Score.text = "Point:" + point;
+        GameTime.text = sec.ToString() ;
+        Score.text = point.ToString();
 	}
 
 	void CountDown()
