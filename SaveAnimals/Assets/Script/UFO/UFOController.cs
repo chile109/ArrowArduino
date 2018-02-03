@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class UFOController : MonoBehaviour {
+public class UFOController : MonoBehaviour
+{
 
     public UFO _ufo;
     public StateMachine _FSM;
@@ -20,7 +21,8 @@ public class UFOController : MonoBehaviour {
     public Vector3 InitPos;
     public Vector3 TargetPos;
 
-    void Start () {
+    void Start()
+    {
         _FSM = new StateMachine();
         _Ani = GetComponent<Animator>();
         _ufo = new UFO();
@@ -30,11 +32,13 @@ public class UFOController : MonoBehaviour {
         TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         FoolAround(5);
-	}
-	
-	void Update () {
-        _FSM.NowState.StateDoing(this.gameObject);
-	}
+    }
+
+    void Update()
+    {
+        if (!ObserverSystem.share.GameOver)
+            _FSM.NowState.StateDoing(this.gameObject);
+    }
 
     /// <summary>
     /// 遊盪一段時間進入狩獵
@@ -44,7 +48,7 @@ public class UFOController : MonoBehaviour {
     {
         //Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
-        TargetID  = UnityEngine.Random.Range(0, m_Targets.Length);
+        TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         //Debug.Log(m_Targets[TargetID].position.x);
 

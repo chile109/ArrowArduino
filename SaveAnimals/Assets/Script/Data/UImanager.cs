@@ -6,21 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class UImanager : MonoBehaviour {
 
+    public GameObject InGame;
+    public GameObject ScoreBoard;
+
     public Image _cursor;
 	public Text GameTime;
 	public Text Score;
+
+    public Text NowScore;
+    public Text TodayBest;
+    public Text HistoryBest;
+
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
     public Texture2D cursorTexture;
 	public static int sec;
 	public static int point;
+    public static int BestScore;
 
 	// Use this for initialization
 	void Start () {
-		sec = 90;
+		sec = 20;
 		point = 0;
 		InvokeRepeating ("CountDown", 0, 1);
-
+        ObserverSystem.share.GameOver = false;
         Cursor.visible = true;
 
 	}
@@ -38,9 +47,31 @@ public class UImanager : MonoBehaviour {
 
 		if (sec < 0)
 		{
-			sec = 90;
-			point = 0;
-            SceneManager.LoadSceneAsync("Wellcome");
+
+            CancelInvoke("CountDown");
+
+            ObserverSystem.share.GameOver = true;
+
+
+            if (point > BestScore)
+                BestScore = point;
+            
+            InGame.SetActive(false);
+            ScoreBoard.SetActive(true);
+
+            NowScore.text = point.ToString();
+            TodayBest.text = BestScore.ToString();
+            HistoryBest.text = "150";
+
+            Invoke("GoResult", 10);
 		}
 	}
+
+    void GoResult()
+    {
+        if(point > 10)
+            SceneManager.LoadSceneAsync("Success");
+        else
+            SceneManager.LoadSceneAsync("Fail");
+    }
 }

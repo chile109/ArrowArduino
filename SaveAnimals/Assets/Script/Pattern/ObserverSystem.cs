@@ -13,7 +13,7 @@ public interface ObDataserver
 public class ObserverSystem : MonoBehaviour
 {
 
-
+    public bool GameOver;
     private static ObserverSystem _instants;
     public static ObserverSystem share { get { return _instants; } }
 
