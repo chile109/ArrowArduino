@@ -805,6 +805,7 @@ GameObject:
   - component: {fileID: 1105024117}
   - component: {fileID: 1105024116}
   - component: {fileID: 1105024115}
+  - component: {fileID: 1105024118}
   m_Layer: 0
   m_Name: ObserverSystem
   m_TagString: Untagged
@@ -834,6 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e125d096524dc7b4103f3b7456b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOver: 0
 --- !u!4 &1105024117
 Transform:
   m_ObjectHideFlags: 0
@@ -847,6 +849,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1105024118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1105024114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6741105750bb24b2eacd3b40d37da910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1223299026 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1101374582632474, guid: b774668ec71de40c58af0bdb9f9afa95,

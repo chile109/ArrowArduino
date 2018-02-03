@@ -26,7 +26,7 @@ public class UImanager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		sec = 20;
+		sec = 90;
 		point = 0;
 		InvokeRepeating ("CountDown", 0, 1);
         ObserverSystem.share.GameOver = false;
@@ -69,7 +69,7 @@ public class UImanager : MonoBehaviour {
 
     void GoResult()
     {
-        if(point > 10)
+        if(point > 75)
             SceneManager.LoadSceneAsync("Success");
         else
             SceneManager.LoadSceneAsync("Fail");

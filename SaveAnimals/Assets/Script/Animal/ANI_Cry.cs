@@ -9,5 +9,7 @@ public class ANI_Cry : BaseState
     {
         Animator _animat = Obj.GetComponent<Animator>();
         _animat.SetTrigger("Fail");
+
+        Obj.GetComponent<AnimalController2>().BubbleOn();
     }
 }

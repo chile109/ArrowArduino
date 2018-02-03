@@ -25,6 +25,10 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         {
             ObserverSystem.share.Notify("All", AnimalState.Success);
         }
+        if (SceneManager.GetActiveScene().name == "Fail")
+        {
+            ObserverSystem.share.Notify("All", AnimalState.Fail);
+        }
         else
         {
             _FSM.NowState = _ani.idle;
@@ -115,6 +119,11 @@ public class AnimalController2 : MonoBehaviour, ObDataserver
         {
             Debug.Log("Error convert, message" + e.Message + ", reason: " + e.StackTrace + ", Text: ");
         }
+    }
+
+    private void OnDestroy()
+    {
+        ObserverSystem.share.Detach(this);
     }
 }
 

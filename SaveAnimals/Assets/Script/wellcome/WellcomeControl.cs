@@ -13,7 +13,7 @@ public class WellcomeControl : MonoBehaviour {
         Cursor.visible = false;
 
         _playerB.loopPointReached += delegate {
-            SceneManager.LoadSceneAsync("Game 1");
+            SceneManager.LoadSceneAsync("Game");
         };
     }
 
