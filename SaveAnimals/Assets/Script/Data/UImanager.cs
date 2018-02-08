@@ -32,6 +32,7 @@ public class UImanager : MonoBehaviour {
         ObserverSystem.share.GameOver = false;
         Cursor.visible = false;
 
+        AudioManager.BGM_ES.Trigger("Game");
 	}
 
 	void Update()

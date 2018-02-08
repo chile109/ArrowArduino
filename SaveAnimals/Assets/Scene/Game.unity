@@ -153,7 +153,7 @@ MonoBehaviour:
       fadeOutTime: 0
     Mute: 0
     PlayOnAwake: 0
-    Loop: 0
+    Loop: 1
     Priority: 115
     Volume: 0.52
     _PitchSet:
