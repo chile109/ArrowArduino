@@ -9,9 +9,13 @@ class MainTask : MonoBehaviour
     Queue<Action> mThreadTaskOnMain = new Queue<Action>();
     void Awake()
     {
-        // 確保不死
-        DontDestroyOnLoad(this);
-        Singleton = this;
+        if (Singleton == null)
+        {
+            Singleton = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+            Destroy(this);
     }
     void Update()
     {

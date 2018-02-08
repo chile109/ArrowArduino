@@ -11,7 +11,7 @@ public class UFO_HuntState : BaseState
     {
         UFOController uFOController = Obj.GetComponent<UFOController>();
         uFOController.Beam.SetActive(true);
-
+        uFOController._Ani.SetTrigger("IsRest");
         if (UFOController.HuntFinish)
         {
             Debug.Log("Finish huntting");

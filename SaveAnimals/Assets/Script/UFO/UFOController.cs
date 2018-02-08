@@ -28,7 +28,7 @@ public class UFOController : MonoBehaviour
         _ufo = new UFO();
         _FSM.NowState = _ufo.Idle;
         InitPos = new Vector3(0, this.transform.position.y, this.transform.position.z);
-
+        HuntFinish = false;
         TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         FoolAround(5);
