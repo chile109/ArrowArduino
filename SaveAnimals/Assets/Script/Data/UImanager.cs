@@ -39,6 +39,12 @@ public class UImanager : MonoBehaviour {
         _cursor.transform.position = Input.mousePosition;
         GameTime.text = sec.ToString() ;
         Score.text = point.ToString();
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            AudioManager.SFX_ES.Trigger("Shooting");
+        }
+
 	}
 
 	void CountDown()

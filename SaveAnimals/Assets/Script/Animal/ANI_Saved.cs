@@ -22,6 +22,7 @@ public class ANI_Saved : BaseState
             LeanTween.move(Obj, Obj.GetComponent<AnimalController2>().SpawnPos, 1.5f).setOnComplete(_ =>
             {
                 ObserverSystem.share.Notify(Obj.name, AnimalState.Idle);
+                AudioManager.SFX_ES.Trigger("Leaves");
             });
         });
                                    

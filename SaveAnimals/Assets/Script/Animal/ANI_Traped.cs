@@ -16,17 +16,18 @@ public class ANI_Traped : BaseState
         Vector3 _InitPos = Obj.transform.position;
 
         Vector3 goal = new Vector3(Obj.transform.position.x, 3.5f, Obj.transform.position.z);
-
+                  
         LeanTween.move(Obj, goal, 10f).setOnUpdate((Vector2 val) =>
         {
             var NowPos = Camera.main.WorldToScreenPoint(Obj.transform.position);
 
             if (!Control.InBubble)
             {
+                AudioManager.SFX_ES.Trigger("Bubble");
                 UFOController.HuntFinish = true;
                 LeanTween.cancel(Obj);
             }
-                
+
             if (NowPos.y > TargetSystem.ShootPoint[Control.H_pos, 0].y)
                 Control.V_pos = 0;
             if (NowPos.y > TargetSystem.ShootPoint[Control.H_pos, 1].y)
@@ -39,6 +40,8 @@ public class ANI_Traped : BaseState
             Obj.SetActive(false);
             ObserverSystem.share.Notify(Obj.name, AnimalState.Idle);
             UFOController.HuntFinish = true;
+
+            AudioManager.SFX_ES.Trigger("Pop");
         });
     }
 }

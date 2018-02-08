@@ -9,7 +9,7 @@ public class UFO_IdleState : BaseState
     UFOController uFOController;
     public override void StateDoing(GameObject Obj)
     {
-        //Debug.Log("UFO_Idle");
+        
         uFOController = Obj.GetComponent<UFOController>();
         uFOController.Beam.SetActive(false);
         Vector3 pos;
@@ -26,7 +26,7 @@ public class UFO_IdleState : BaseState
             uFOController.startHunt = false;
             uFOController._Ani.SetTrigger("IsHuntting");
             uFOController._FSM.NowState = uFOController._ufo.Hunt;
-
+            AudioManager.SFX_ES.Trigger("Beam");
             ObserverSystem.share.Notify(uFOController.m_Targets[uFOController.TargetID].name, AnimalState.Help);
         }
     }

@@ -32,6 +32,8 @@ public class UFOController : MonoBehaviour
         TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         FoolAround(5);
+
+        AudioManager.SFX_ES.Trigger("UFO");
     }
 
     void Update()
@@ -46,12 +48,13 @@ public class UFOController : MonoBehaviour
     /// <param name="_duration">Duration.</param>
     public async void FoolAround(double _duration)
     {
+        AudioManager.SFX_ES.Trigger("UFO");
         //Debug.Log("Waiting " + _duration + " second...");
         await Task.Delay(TimeSpan.FromSeconds(_duration));
         TargetID = UnityEngine.Random.Range(0, m_Targets.Length);
         TargetPos = new Vector3(m_Targets[TargetID].position.x, this.transform.position.y, this.transform.position.z);
         //Debug.Log(m_Targets[TargetID].position.x);
-
+        AudioManager.SFX_ES.Trigger("UFO");
         startHunt = true;
     }
 
